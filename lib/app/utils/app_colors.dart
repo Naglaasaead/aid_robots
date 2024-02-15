@@ -5,21 +5,6 @@ class AppColors{
   static const grey8080 = Color(0xFF808080);
   static const grey455 = Color(0xFF455A64);
   static const greyD9D9D9 = Color(0xFFD9D9D9);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   static const green2 = Color(0xFF27AE60);
   static const darkGreen = Color(0xFF23A65A);
   static const gery4 = Color(0xFF707070);
@@ -41,12 +26,6 @@ class AppColors{
   static const bookButton = Color(0xffF09575);
   static const secondBackGround = Color(0xFFFFFFFF);
   static const scaffoldBackGround = Color(0xFFF9F9F9);
-
-
-
-
-
-
   static const black = Color(0xff000000);
   static const black1A = Color(0xff1A1A1A);
   static const black191919 = Color(0xff191919);
