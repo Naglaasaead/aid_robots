@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 import '../../features/auth_feature/data/models/user_model.dart';
 import '../utils/get_it_injection.dart';
 
@@ -57,7 +58,7 @@ class CacheService {
   UserModel? getUserData() {
      final result = _prefs.getString('user');
      if(result !=null){
-        return UserModel.fromMap(json.decode(result));
+        return UserModel.fromJson(json.decode(result));
      }
      return null ;
   }

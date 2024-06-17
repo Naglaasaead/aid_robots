@@ -1,10 +1,12 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_interceptor/http_interceptor.dart';
+
 import '../services/cache_service.dart';
 import '../utils/consts.dart';
 import '../utils/get_it_injection.dart';

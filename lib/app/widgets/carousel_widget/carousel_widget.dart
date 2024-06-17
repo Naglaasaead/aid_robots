@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'carousel_cubit/carousel_cubit.dart';
 
 class CarouselWidget extends StatefulWidget {

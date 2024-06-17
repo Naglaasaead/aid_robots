@@ -1,16 +1,14 @@
-import 'package:bloc/bloc.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:easy_localization/easy_localization.dart';
+import 'package:aid_robot/features/auth_feature/data/models/user_model.dart';
+import 'package:aid_robot/features/auth_feature/domain/usercases/register_user_case.dart';
 import 'package:equatable/equatable.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../app/utils/app_colors.dart';
 import '../../../../app/utils/get_it_injection.dart';
+import '../../../../app/utils/hanlders/error_state_handler.dart';
 import '../../../../app/utils/helper.dart';
 import '../../../../app/utils/navigation_helper.dart';
-import '../../../../app/widgets/flutter_toast.dart';
+import '../screens/home_patient.dart';
 
 part 'auth_state.dart';
 
@@ -22,8 +20,6 @@ class AuthCubit extends Cubit<AuthState> {
   final loginPasswordController = TextEditingController();
   final loginEmailController = TextEditingController();
 
-  FirebaseAuth auth = FirebaseAuth.instance;
-  FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 
   final signUpFullNameController = TextEditingController();
   final signUpPhoneController = TextEditingController();
@@ -31,8 +27,27 @@ class AuthCubit extends Cubit<AuthState> {
   final signUpEmailController = TextEditingController();
   String ? city;
   String ? government;
-
-
+UserModel ? userModel;
+  void reg() async {
+    emit(LoadingState());
+    final response = await getIt<RegisterUseCase>()(RegisterUseCaseParams(
+        email:"mody4404@gmail.com",
+        password: "mody12",
+        phone: '01016738856',
+        name: 'Mody',
+    ));
+    response.fold(
+      errorStateHandler,
+          (r) {
+        userModel = r;
+        print(r.token??"token");
+        navigateTo( HomePatient(), removeAll: true);
+        loginPasswordController.clear();
+        loginPasswordController.clear();
+      },
+    );
+    emit(AuthInitial());
+  }
 
   // void login()async{
   //   emit(LoadingState());

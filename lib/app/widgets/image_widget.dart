@@ -2,8 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../utils/app_colors.dart';
-
 class ImageWidget extends StatelessWidget {
 
   const ImageWidget({

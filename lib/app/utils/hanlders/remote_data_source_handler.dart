@@ -1,6 +1,8 @@
 import 'dart:developer';
+
 import 'package:aid_robot/features/auth_feature/presentation/screens/engineer_login_screen.dart';
 import 'package:http/http.dart';
+
 import '../../../features/auth_feature/data/models/user_model.dart';
 import '../../error/exceptions.dart';
 import '../../model/global_response_model.dart';
@@ -39,7 +41,7 @@ class RemoteDataSourceCallHandler {
       }
       else if(response.success==false) {
         if(response.key=="needActive"){
-          throw AuthException(response.msg??"unknown Error",user:UserModel.fromMap(response.data['user']));
+          throw AuthException(response.msg??"unknown Error",user:UserModel.fromJson(response.data['user']));
         }
         throw ServerException(response.msg ?? "unknown Error");
       }

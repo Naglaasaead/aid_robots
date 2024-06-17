@@ -1,10 +1,12 @@
 
-const String kBaseUrl = "eventa.addictaco.com";
+const String kBaseUrl = "student.valuxapps.com";
 const String kBaseVersion = 'api/';
-
+final url='http://5.161.210.71:3000/registration';
+final registration = url+"registration";
+final login = url+"login";
 // end points
-const String kSignIn = 'auth/user/login';
-const String kSignUp = 'auth/register';
+const String kSignIn = 'login';
+const String kSignUp = 'register';
 const String kSocialLogin = 'auth/social-login';
 const String kGetMe = 'auth/user/me';
 const String kRefreshToken = 'auth/user/refresh';
