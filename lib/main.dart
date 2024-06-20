@@ -1,6 +1,7 @@
 import 'package:aid_robot/features/FireBase/firebase_notification.dart';
 import 'package:aid_robot/firebase_options.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,7 +17,11 @@ import 'app/utils/language_manager.dart';
 import 'app/utils/navigation_helper.dart';
 import 'app/widgets/carousel_widget/carousel_cubit/carousel_cubit.dart';
 import 'features/auth_feature/presentation/presentation_logic_holder/auth_cubit.dart';
+import 'features/auth_feature/presentation/screens/Home.dart';
 import 'features/auth_feature/presentation/screens/Video.dart';
+import 'features/auth_feature/presentation/screens/chat1.dart';
+import 'features/auth_feature/presentation/screens/login_chat.dart';
+import 'features/auth_feature/presentation/screens/reg_chat.dart';
 import 'features/auth_feature/presentation/screens/splashScreen.dart';
   // Import the Agora page
 
@@ -26,6 +31,7 @@ void main() async {
   await EasyLocalization.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
+   name: 'secondaryApp',
   );
   FireBaseNotification firebaseNotification = FireBaseNotification();
   firebaseNotification.getToken();
@@ -49,8 +55,8 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
+   MyApp({Key? key}) : super(key: key);
+  final _auth=FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     return EasyLocalization(
@@ -85,7 +91,14 @@ class MyApp extends StatelessWidget {
                 child: widget!,
               );
             },
-            home: AgoraScreen(), // Set AgoraScreen as the initial screen
+            home:_auth.currentUser!=null? ChatScreen():WelcomeScreen() ,
+            //initialRoute:  WelcomeScreen.ScreenRoute ,
+           /* routes: {
+              WelcomeScreen.ScreenRoute:(context)=> WelcomeScreen(),
+              LoginChat.ScreenRoute:(context)=> LoginChat(),
+              Registration.ScreenRoute:(context)=> Registration(),
+              ChatScreen.ScreenRoute:(context)=> ChatScreen(),
+            },*/// Set AgoraScreen as the initial screen
           ),
         ),
       ),
