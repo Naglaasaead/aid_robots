@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "915852996049",
+    "project_id": "messageme-app-d46a1",
+    "storage_bucket": "messageme-app-d46a1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:915852996049:android:0f4336b4d1cb9a4ba204f0",
+        "android_client_info": {
+          "package_name": "com.naglaa.aid_robot"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBzhv2hQfVV6tBXjFjKVELGiA6nIaMbS1M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
