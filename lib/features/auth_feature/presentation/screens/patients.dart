@@ -1,3 +1,4 @@
+/*
 
 import 'dart:core';
 
@@ -232,3 +233,158 @@ class DetailDoctors extends StatelessWidget {
 
 
 
+*/
+
+
+
+import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'detail_patient.dart'; // قم بتعديل هذا استيراد حسب اسم الملف الخاص بك
+
+class Patient extends StatefulWidget {
+  const Patient({Key? key});
+
+  @override
+  State<Patient> createState() => _PatientState();
+}
+
+class _PatientState extends State<Patient> {
+  late List<Map<String, dynamic>> completedAppointments;
+
+  @override
+  void initState() {
+    super.initState();
+    getCompletedAppointments();
+  }
+
+  Future<void> getCompletedAppointments() async {
+    try {
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('CompletedAppointments').get();
+      setState(() {
+        completedAppointments = querySnapshot.docs.map((doc) => doc.data() as Map<String, dynamic>).toList();
+      });
+    } catch (e) {
+      print("Failed to fetch completed appointments: $e");
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Center(
+          child: Text(
+            "All Patients",
+            style: TextStyle(fontSize: 25, color: Colors.black),
+          ),
+        ),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.add),
+          ),
+          IconButton(
+            onPressed: () {
+              setState(() {
+                getCompletedAppointments();
+              });
+            },
+            icon: Icon(Icons.update),
+          ),
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.delete),
+          ),
+        ],
+      ),
+      body: ListView.builder(
+        itemCount: completedAppointments.length,
+        itemBuilder: (context, index) {
+          final appointment = completedAppointments[index];
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: GestureDetector(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) =>  DeatailPatient())); // اختار هنا تفاصيل المريض
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black12),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                padding: EdgeInsets.only(left: 20),
+                height: 120,
+                child: Row(
+                  children: [
+                    // هنا يمكنك عرض الصورة المطلوبة من Firebase
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: Image.asset(
+                        "assets/images/default_patient_image.png", // استبدل بمسار الصورة من Firebase
+                        width: 70,
+                        height: 70,
+                      ),
+                    ),
+                    SizedBox(width: 13),
+                    Expanded(
+                      child: DetailDoctors(
+                        titel: appointment['username'],
+                        subTitel: appointment['specialization'],
+                        date: "Completed", // تاريخ التعيين المكتمل
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class DetailDoctors extends StatelessWidget {
+  final String? titel;
+  final String? subTitel;
+  final String? date;
+
+  const DetailDoctors({
+    Key? key,
+    this.titel,
+    this.subTitel,
+    this.date,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 26),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              if (titel != null)
+                Text(
+                  titel!,
+                  style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold, color: Colors.black),
+                ),
+              SizedBox(width: 65),
+            ],
+          ),
+          if (subTitel != null)
+            Text(
+              subTitel!,
+              style: TextStyle(fontSize: 16, color: Colors.grey),
+            ),
+          if (date != null)
+            Text(
+              date!,
+              style: TextStyle(fontSize: 16, color: Colors.grey),
+            ),
+        ],
+      ),
+    );
+  }
+}

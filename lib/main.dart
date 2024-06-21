@@ -19,6 +19,7 @@ import 'app/widgets/carousel_widget/carousel_cubit/carousel_cubit.dart';
 import 'features/auth_feature/presentation/presentation_logic_holder/auth_cubit.dart';
 import 'features/auth_feature/presentation/screens/Home.dart';
 import 'features/auth_feature/presentation/screens/Video.dart';
+import 'features/auth_feature/presentation/screens/appointment.dart';
 import 'features/auth_feature/presentation/screens/chat1.dart';
 import 'features/auth_feature/presentation/screens/login_chat.dart';
 import 'features/auth_feature/presentation/screens/reg_chat.dart';
@@ -91,7 +92,8 @@ class MyApp extends StatelessWidget {
                 child: widget!,
               );
             },
-            home:_auth.currentUser!=null? ChatScreen():WelcomeScreen() ,
+            //home:_auth.currentUser!=null? ChatScreen():WelcomeScreen() ,
+            home: Appointment(),
             //initialRoute:  WelcomeScreen.ScreenRoute ,
            /* routes: {
               WelcomeScreen.ScreenRoute:(context)=> WelcomeScreen(),

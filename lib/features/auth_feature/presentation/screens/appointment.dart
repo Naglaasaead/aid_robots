@@ -490,6 +490,7 @@ class _AppointmentState extends State<Appointment> with SingleTickerProviderStat
 
 
 
+/*
 import 'package:aid_robot/app/widgets/text_widget.dart';
 import 'package:aid_robot/features/auth_feature/presentation/screens/cancel_alert.dart';
 import 'package:flutter/material.dart';
@@ -900,3 +901,809 @@ class _AppointmentState extends State<Appointment> with SingleTickerProviderStat
   }
 }
 
+*/
+
+
+/*import 'package:aid_robot/app/widgets/text_widget.dart';
+import 'package:aid_robot/features/auth_feature/presentation/screens/cancel_alert.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+
+import 'button_nav_bar.dart';
+
+class Appointment extends StatefulWidget {
+  const Appointment({Key? key}) : super(key: key);
+
+  @override
+  State<Appointment> createState() => _AppointmentState();
+}
+
+class _AppointmentState extends State<Appointment> with SingleTickerProviderStateMixin {
+  late TabController tabController;
+  final TextEditingController _searchController = TextEditingController();
+  List<String> doctor = [
+    "assets/images/d1.png",
+    "assets/images/d2.png",
+    "assets/images/d3.png",
+    "assets/images/d1.png",
+    "assets/images/d2.png",
+    "assets/images/d3.png",
+  ];
+  List<String> searchResults = [];
+  List<String> titel = [
+    "Dr. Randy Wigham",
+    "Dr. Jack Sulivan",
+    "Drg. Hanna Stanton",
+    "Dr. Randy Wigham",
+    "Dr. Jack Sulivan",
+    "Drg. Hanna Stanton",
+  ];
+  List<String> subTitel = [
+    "General Medical Checkup",
+    "General Medical Checkup",
+    "General Medical Checkup",
+    "General Medical Checkup",
+    "General Medical Checkup",
+    "General Medical Checkup",
+  ];
+  List<String> dateTime = [
+    "Wed, 17 May | 08.30 AM",
+    "Wed, 18 May | 10.10 AM",
+    "Wed, 19 May | 05.15 AM",
+    "Wed, 20 May | 12.20 AM",
+    "Wed, 12 May | 08.00 AM",
+    "Wed, 11 May | 03.30 AM",
+  ];
+  List<Widget> review = [
+    Row(
+      children: [
+        Icon(Icons.star, color: Colors.yellow),
+        SizedBox(width: 5),
+        TextWidget(title: "4.8 (4,279 reviews)"),
+      ],
+    ),
+    // Add more review widgets as needed
+  ];
+  //ADD Data
+ *//*
+  addData() async {
+    try {
+      CollectionReference doctorRef = FirebaseFirestore.instance.collection('Doctors');
+      await doctorRef.add({
+        "specialization": "surgery",
+        "username": "Yaser",
+      });
+      print("Data added successfully");
+    } catch (e) {
+      print("Failed to add data: $e");
+    }
+
+    // Uncomment this to print data from Firestore
+    *//**//*
+  QuerySnapshot querySnapshot = await doctorRef.get();
+  querySnapshot.docs.forEach((element) {
+    print(element.data());
+    print("=============================");
+  });
+  *//**//*
+  }*//*
+
+  //UpDate Data
+ *//* upDateData() async {
+    try {
+      CollectionReference doctorRef = FirebaseFirestore.instance.collection('Doctors');
+      doctorRef.doc("BccwAVKZ2u3Q1yiTTi01").update({
+        "username": "DR Amr Mohamed"
+      });
+      print("Data UpDate successfully");
+    } catch (e) {
+      print("Failed to upDate data: $e");
+    }
+
+    // Uncomment this to print data from Firestore
+    *//**//*
+  QuerySnapshot querySnapshot = await doctorRef.get();
+  querySnapshot.docs.forEach((element) {
+    print(element.data());
+    print("=============================");
+  });
+  *//**//*
+  }*//*
+  *//*
+  upDateDataNestedCollection() async {
+    try {
+      CollectionReference doctorRef = FirebaseFirestore.instance.collection('Doctors').doc("0fC8xpHzusql4RhzZIpz").collection('adress');
+      doctorRef.doc("VFxvYpfzCDiWtlGoTrNs").update({
+        "country": "sy"
+      });
+      print("Data UpDate successfully");
+    } catch (e) {
+      print("Failed to upDate data: $e");
+    }
+
+    // Uncomment this to print data from Firestore
+    *//**//*
+  QuerySnapshot querySnapshot = await doctorRef.get();
+  querySnapshot.docs.forEach((element) {
+    print(element.data());
+    print("=============================");
+  });
+  *//**//*
+  }*//*
+
+
+//Delete Data
+*//*  deleteData() async {
+    try {
+      CollectionReference doctorRef = FirebaseFirestore.instance.collection('Doctors').doc("0fC8xpHzusql4RhzZIpz").collection('adress');
+      doctorRef.doc("VFxvYpfzCDiWtlGoTrNs").delete();
+      print("Data delete successfully");
+    } catch (e) {
+      print("Failed to delete data: $e");
+    }
+
+    // Uncomment this to print data from Firestore
+    *//**//*
+  QuerySnapshot querySnapshot = await doctorRef.get();
+  querySnapshot.docs.forEach((element) {
+    print(element.data());
+    print("=============================");
+  });
+  *//**//*
+  }*//*
+  //DocumentReference docRef= FirebaseFirestore.instance.collection('Doctors').doc("0fC8xpHzusql4RhzZIpz");
+  *//*trans(){
+     FirebaseFirestore.instance.runTransaction((runtransaction) async{
+       DocumentSnapshot documentSnapshot= await runtransaction.get(docRef);
+       if(documentSnapshot.exists){
+                           runtransaction.update(docRef, {
+                             "username": "DR Naglaa Saeed "
+                           });
+       }else{
+         print("User Not Exist");
+       }
+     });
+  }*//*
+ // DocumentReference docRef2= FirebaseFirestore.instance.collection('Doctors').doc("BccwAVKZ2u3Q1yiTTi01");
+ *//* batch(){
+
+    WriteBatch batch = FirebaseFirestore.instance.batch();
+    batch.delete(docRef2);
+    batch.update(docRef, ({
+      "username ": "DR Naglaa Saeed Mohammed"
+    }));
+    batch.commit();
+  }*//*
+  List users= [];
+  CollectionReference doctorRef = FirebaseFirestore.instance.collection('Doctors');
+  getData()async{
+      var resbonsebody= await doctorRef.get();
+      resbonsebody.docs.forEach((element){
+        users.add(element.data());
+      });
+  }
+  @override
+  void initState() {
+    super.initState();
+    getData();
+    tabController = TabController(length: 3, vsync: this);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        leading: Center(
+          child: Container(
+            height: 40,
+            width: 40,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+              border: Border.all(color: Colors.black12),
+            ),
+          ),
+        ),
+        actions: [
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              child: Stack(
+                children: [
+                  Container(
+                    height: 40,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: Colors.grey,
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: TextFormField(
+                      controller: _searchController,
+                      style: TextStyle(color: Colors.white),
+                      onChanged: (value) {
+                        setState(() {
+                          // Filter the data based on the search term
+                          searchResults = [];
+                          for (int i = 0; i < titel.length; i++) {
+                            if (titel[i].toLowerCase().contains(value.toLowerCase()) ||
+                                subTitel[i].toLowerCase().contains(value.toLowerCase())) {
+                              searchResults.add(titel[i]);
+                            }
+                          }
+                        });
+                      },
+                      decoration: InputDecoration(
+                        hintText: 'Search',
+                        hintStyle: TextStyle(color: Colors.white),
+                        contentPadding: EdgeInsets.symmetric(horizontal: 15),
+                        border: InputBorder.none,
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    right: 10,
+                    top: 0,
+                    bottom: 0,
+                    child: IconButton(
+                      icon: Icon(Icons.search, color: Colors.black),
+                      onPressed: () {
+                        // Perform any action here when search button is pressed
+                        print('Search icon pressed');
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+        bottom: TabBar(
+          controller: tabController,
+          tabs: [
+            Tab(text: 'Upcoming'),
+            Tab(text: 'Completed'),
+            Tab(text: 'Cancelled'),
+          ],
+          onTap: (index) {
+            print('Tapped on tab $index');
+          },
+        ),
+      ),
+      body: TabBarView(
+        controller: tabController,
+        children: [
+          // Upcoming
+          ListView.builder(
+            itemCount: searchResults.isNotEmpty ? searchResults.length : doctor.length,
+            itemBuilder: (context, index) {
+              final itemIndex = searchResults.isNotEmpty ? titel.indexOf(searchResults[index]) : index;
+              return Column(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.black12),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    padding: EdgeInsets.only(left: 20),
+                    height: 120,
+                    child: Row(
+                      children: [
+                        Image.asset(doctor[itemIndex]),
+                        SizedBox(width: 13),
+                        DetailDoctors(
+                          titel: titel[itemIndex],
+                          subTitel: subTitel[itemIndex],
+                          date: dateTime[itemIndex],
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  Row(
+                    children: [
+                      SizedBox(width: 10),
+                      ElevatedButton(
+                        onPressed: () {},
+                        child: TextWidget(
+                          title: "Cancel Appointment",
+                          titleSize: 14,
+                          titleColor: Colors.blueAccent,
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          fixedSize: Size(175, 35),
+                          side: BorderSide(color: Colors.blueAccent),
+                        ),
+                      ),
+                      SizedBox(width: 5),
+                      ElevatedButton(
+                        onPressed: () {},
+                        child: TextWidget(
+                          title: "Reschedule",
+                          titleSize: 16,
+                          titleColor: Colors.white,
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.blueAccent,
+                          fixedSize: Size(175, 35),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 10),
+                ],
+              );
+            },
+          ),
+          // Completed
+          ListView.builder(
+            itemCount: searchResults.isNotEmpty ? searchResults.length : doctor.length,
+            itemBuilder: (context, index) {
+              final itemIndex = searchResults.isNotEmpty ? titel.indexOf(searchResults[index]) : index;
+              return Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.black12),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 20),
+                        child: Column(
+                          children: [
+                            TextWidget(
+                              title: "Appointment done",
+                              titleColor: Colors.green,
+                            ),
+                            Row(
+                              children: [
+                                DetailDoctors(date: dateTime[itemIndex]),
+                                Spacer(),
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 10),
+                                  child: Icon(Icons.more_vert, color: Colors.grey),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 5),
+                            Padding(
+                              padding: const EdgeInsets.only(right: 10),
+                              child: Container(width: double.infinity, height: 1, color: Colors.grey),
+                            ),
+                            SizedBox(height: 5),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 1, bottom: 15, top: 5),
+                              child: Row(
+                                children: [
+                                  Image.asset(doctor[itemIndex]),
+                                  SizedBox(width: 13),
+                                  Column(
+                                    children: [
+                                      TextWidget(
+                                        title: titel[itemIndex],
+                                        titleSize: 19,
+                                        titleFontWeight: FontWeight.bold,
+                                        titleColor: Colors.black,
+                                      ),
+                                      TextWidget(
+                                        title: subTitel[itemIndex],
+                                        titleSize: 16,
+                                        titleColor: Colors.grey,
+                                      ),
+                                      Row(
+                                        children: [review[itemIndex]],
+                                      )
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                  ],
+                ),
+              );
+            },
+          ),
+          // Cancelled
+          ListView.builder(
+            itemCount: searchResults.isNotEmpty ? searchResults.length : doctor.length,
+            itemBuilder: (context, index) {
+              final itemIndex = searchResults.isNotEmpty ? titel.indexOf(searchResults[index]) : index;
+              return Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => CancelAlert()));
+                  },
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.black12),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 20),
+                          child: Column(
+                            children: [
+                              TextWidget(
+                                title: "Appointment Cancelled",
+                                titleColor: Colors.red,
+                              ),
+                              Row(
+                                children: [
+                                  DetailDoctors(date: dateTime[itemIndex]),
+                                  Spacer(),
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 10),
+                                    child: Icon(Icons.more_vert, color: Colors.grey),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 5),
+                              Padding(
+                                padding: const EdgeInsets.only(right: 10),
+                                child: Container(width: double.infinity, height: 1, color: Colors.grey),
+                              ),
+                              SizedBox(height: 5),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 1, bottom: 15, top: 5),
+                                child: Row(
+                                  children: [
+                                    Image.asset(doctor[itemIndex]),
+                                    SizedBox(width: 13),
+                                    Column(
+                                      children: [
+                                        TextWidget(
+                                          title: titel[itemIndex],
+                                          titleSize: 19,
+                                          titleFontWeight: FontWeight.bold,
+                                          titleColor: Colors.black,
+                                        ),
+                                        TextWidget(
+                                          title: subTitel[itemIndex],
+                                          titleSize: 16,
+                                          titleColor: Colors.grey,
+                                        ),
+                                        Row(
+                                          children: [review[itemIndex]],
+                                        )
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                    ],
+                  ),
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+      bottomNavigationBar: ButtonNavBar(initialIndex: 3),
+    );
+  }
+
+  Padding DetailDoctors({String? titel, String? subTitel, String? date}) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 26),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              if (titel != null) TextWidget(
+                title: titel,
+                titleSize: 19,
+                titleFontWeight: FontWeight.bold,
+                titleColor: Colors.black,
+              ),
+              SizedBox(width: 65),
+              if (titel != null) Icon(Icons.chat, color: Colors.blueAccent),
+            ],
+          ),
+          if (subTitel != null) TextWidget(
+            title: subTitel,
+            titleSize: 16,
+            titleColor: Colors.grey,
+          ),
+          if (date != null) TextWidget(
+            title: date,
+            titleSize: 16,
+            titleColor: Colors.grey,
+          ),
+        ],
+      ),
+    );
+  }
+}*/
+
+
+
+import 'package:aid_robot/app/widgets/text_widget.dart';
+import 'package:aid_robot/features/auth_feature/presentation/screens/cancel_alert.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+
+import 'button_nav_bar.dart';
+
+class Appointment extends StatefulWidget {
+  const Appointment({Key? key}) : super(key: key);
+
+  @override
+  State<Appointment> createState() => _AppointmentState();
+}
+
+class _AppointmentState extends State<Appointment> with SingleTickerProviderStateMixin {
+  late TabController tabController;
+  final TextEditingController _searchController = TextEditingController();
+  List<String> doctorImages = [
+    "assets/images/d1.png",
+    "assets/images/d2.png",
+    "assets/images/d3.png",
+    "assets/images/d1.png",
+    "assets/images/d2.png",
+    "assets/images/d3.png",
+  ];
+  List<Map<String, dynamic>> doctors = [];
+  List<Map<String, dynamic>> searchResults = [];
+
+  @override
+  void initState() {
+    super.initState();
+    getData();
+    addData();
+    tabController = TabController(length: 3, vsync: this);
+  }
+
+  Future<void> getData() async {
+    CollectionReference doctorRef = FirebaseFirestore.instance.collection('Doctors');
+    QuerySnapshot querySnapshot = await doctorRef.get();
+    setState(() {
+      doctors = querySnapshot.docs.map((doc) => doc.data() as Map<String, dynamic>).toList();
+    });
+  }
+
+  addData() async {
+    try {
+      CollectionReference doctorRef = FirebaseFirestore.instance.collection('Doctors').doc('0fC8xpHzusql4RhzZIpz').collection('patient_naglaa');
+      await doctorRef.add({
+        "specialization": "surgery",
+        "username": "Yaser",
+      });
+      print("Data added successfully");
+    } catch (e) {
+      print("Failed to add data: $e");
+    }
+
+
+  }
+  Future<void> showLoading(BuildContext context) {
+    return showDialog<void>(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          content: Row(
+            children: [
+              Container(height:50,child: Center(child: CircularProgressIndicator())),
+              SizedBox(width: 20),
+              Text("Loading..."),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        leading: Center(
+          child: Container(
+            height: 40,
+            width: 40,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+              border: Border.all(color: Colors.black12),
+            ),
+          ),
+        ),
+        actions: [
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              child: Stack(
+                children: [
+                  Container(
+                    height: 40,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: Colors.grey,
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: TextFormField(
+                      controller: _searchController,
+                      style: TextStyle(color: Colors.white),
+                      onChanged: (value) {
+                        setState(() {
+                          searchResults = doctors.where((doctor) {
+                            return doctor['username'].toLowerCase().contains(value.toLowerCase()) ||
+                                doctor['specialization'].toLowerCase().contains(value.toLowerCase());
+                          }).toList();
+                        });
+                      },
+                      decoration: InputDecoration(
+                        hintText: 'Search',
+                        hintStyle: TextStyle(color: Colors.white),
+                        contentPadding: EdgeInsets.symmetric(horizontal: 15),
+                        border: InputBorder.none,
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    right: 10,
+                    top: 0,
+                    bottom: 0,
+                    child: IconButton(
+                      icon: Icon(Icons.search, color: Colors.black),
+                      onPressed: () {
+                        // Perform any action here when search button is pressed
+                        print('Search icon pressed');
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+        bottom: TabBar(
+          controller: tabController,
+          tabs: [
+            Tab(text: 'Upcoming'),
+            Tab(text: 'Completed'),
+            Tab(text: 'Cancelled'),
+          ],
+          onTap: (index) {
+            print('Tapped on tab $index');
+          },
+        ),
+      ),
+      body: TabBarView(
+        controller: tabController,
+        children: [
+          buildListView(searchResults.isNotEmpty ? searchResults : doctors, true),
+          buildListView(searchResults.isNotEmpty ? searchResults : doctors, false),
+          buildListView(searchResults.isNotEmpty ? searchResults : doctors, false),
+        ],
+      ),
+      bottomNavigationBar: ButtonNavBar(initialIndex: 3),
+    );
+  }
+
+  Widget buildListView(List<dynamic> data, bool isUpcoming) {
+    return ListView.builder(
+      itemCount: data.length,
+      itemBuilder: (context, index) {
+        if (data is List<Map<String, dynamic>>) {
+          final doctor = data[index];
+          return Column(
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black12),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                padding: EdgeInsets.only(left: 20),
+                height: 120,
+                child: Row(
+                  children: [
+                    Image.asset(doctorImages[index % doctorImages.length]),
+                    SizedBox(width: 13),
+                    DetailDoctors(
+                      titel: doctor['username'],
+                      subTitel: doctor['specialization'],
+                      date: "Wed, 17 May | 08.30 AM", // Placeholder date
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 10),
+              isUpcoming ? Row(
+                children: [
+                  SizedBox(width: 10),
+                  ElevatedButton(
+                    onPressed: () {
+                      addData();
+                    },
+                    child: TextWidget(
+                      title: "Cancel Appointment",
+                      titleSize: 14,
+                      titleColor: Colors.blueAccent,
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.white,
+                      fixedSize: Size(175, 35),
+                      side: BorderSide(color: Colors.blueAccent),
+                    ),
+                  ),
+                  SizedBox(width: 5),
+                  ElevatedButton(
+                    onPressed: () {},
+                    child: TextWidget(
+                      title: "Reschedule",
+                      titleSize: 16,
+                      titleColor: Colors.white,
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blueAccent,
+                      fixedSize: Size(175, 35),
+                    ),
+                  ),
+                ],
+              ) : Container(),
+              SizedBox(height: 10),
+            ],
+          );
+        } else {
+          // Handle the case where data is List<String> (for doctorImages)
+          final imagePath = data[index];
+          return Container(
+            height: 120,
+            width: double.infinity,
+            child: Image.asset(imagePath),
+          );
+        }
+      },
+    );
+  }
+
+
+  Padding DetailDoctors({String? titel, String? subTitel, String? date}) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 26),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              if (titel != null) TextWidget(
+                title: titel,
+                titleSize: 19,
+                titleFontWeight: FontWeight.bold,
+                titleColor: Colors.black,
+              ),
+              SizedBox(width: 65),
+              if (titel != null) Icon(Icons.chat, color: Colors.blueAccent),
+            ],
+          ),
+          if (subTitel != null) TextWidget(
+            title: subTitel,
+            titleSize: 16,
+            titleColor: Colors.grey,
+          ),
+          if (date != null) TextWidget(
+            title: date,
+            titleSize: 16,
+            titleColor: Colors.grey,
+          ),
+        ],
+      ),
+    );
+  }
+}
