@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'button_nav_bar.dart';
 
 class DeatailPatient extends StatefulWidget {
-  const DeatailPatient({super.key});
+  const DeatailPatient({super.key, required this.name, required this.status,});
+  final String name;
+  final String status;
 
   @override
   State<DeatailPatient> createState() => _DeatailPatientState();
@@ -59,7 +61,7 @@ class _DeatailPatientState extends State<DeatailPatient> {
                 Padding(
                   padding: const EdgeInsets.only(right: 30),
                   child: TextWidget(
-                    title: " Naglaa Saeed",
+                    title: widget.name,
                     titleSize: 22,
                     titleColor: Colors.red, // تحديد لون النص الأحمر هنا
                     titleFontWeight: FontWeight.bold,
@@ -122,7 +124,7 @@ class _DeatailPatientState extends State<DeatailPatient> {
                 Padding(
                   padding: const EdgeInsets.only(right: 43),
                   child: TextWidget(
-                    title: " Diabetic",
+                    title: widget.status,
                     titleSize: 22,
                     titleColor: Colors.red, // تحديد لون النص الأحمر هنا
                     titleFontWeight: FontWeight.bold,

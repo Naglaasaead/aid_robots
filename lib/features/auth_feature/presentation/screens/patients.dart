@@ -1,10 +1,10 @@
+
 /*
 
-import 'dart:core';
-
-import 'package:aid_robot/app/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../../../../app/widgets/text_widget.dart';
 import 'button_nav_bar.dart';
 import 'detail_patient.dart';
 
@@ -12,11 +12,11 @@ class Patient extends StatefulWidget {
   const Patient({Key? key});
 
   @override
-  State<Patient> createState() => _patientState();
+  State<Patient> createState() => _PatientState();
 }
 
-class _patientState extends State<Patient> {
-  List<String> imagePatien = [
+class _PatientState extends State<Patient> {
+  List<String> imagePatients = [
     "assets/images/pat2.jpeg",
     "assets/images/pat3.jpeg",
     "assets/images/pat4.jpeg",
@@ -28,243 +28,204 @@ class _patientState extends State<Patient> {
     "assets/images/pat10.jpeg",
     "assets/images/pat3.jpeg",
   ];
-  List<String> namePatient = [
-    "Naglaa Saeed",
-    "Basmala Moustafa ",
-    "Amr Mohamed",
-    "Adham Essam",
-    "Shady Mohamed",
-    "Seif Al-dein",
-    "Ahmed Reda",
-    "Sama Maher",
-    "Rahaf Ahmed",
-    "Zain Mostafa",
-  ];
-  List<String> status = [
-    "Status is diabetic",
-    "Status is Status is Heart ",
-    "Status is A blood pressure ",
-    "Status is High temperature",
-    "Status is diabetic",
-    "Status is Heart patient",
-    "Status is A blood pressure ",
-    "Status is High temperature",
-    "Status is Heart patient",
-    "Status is A blood pressure ",
-  ];
-  late   int index=0;
-  List<String> dateTime = [];
-
-  bool showNewPatient = false;
-
-  @override
-  Widget build(BuildContext context) {
-    void _deletePatient( index) {
-      setState(() {
-        imagePatien.removeAt(index);
-        namePatient.removeAt(index);
-        status.removeAt(index);
-        dateTime.removeAt(index);
-      });
-    }
-
-    return Scaffold(
-      appBar: AppBar(
-        title: Center(
-          child: Text(
-            " All Patient ",
-            style: TextStyle(fontSize: 25, color: Colors.black),
-          ),
-        ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              setState(() {
-                showNewPatient = true;
-              });
-            },
-            icon: Icon(Icons.add),
-          ),
-          IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.update),
-          ),
-          IconButton(
-            onPressed: () {
-              // حذف العنصر المحدد من القائمة
-              setState(() {
-                _deletePatient(index);
-              });
-            },
-            icon: Icon(Icons.delete),
-          ),
-
-
-        ],
-      ),
-      body: ListView.builder(
-        itemCount: imagePatien.length + (showNewPatient ? 1 : 0),
-        itemBuilder: (context, index) {
-          if (index == imagePatien.length) {
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: SizedBox(
-                height: 120,
-                child: Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black12),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  padding: EdgeInsets.only(left: 20),
-                  child: Center(
-                    child: Text(
-                      "New Patient",
-                      style: TextStyle(fontSize: 20),
-                    ),
-                  ),
-                ),
-              ),
-            );
-          } else {
-            // عرض بيانات المريض
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: GestureDetector(
-                onTap: (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => DeatailPatient(),));
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black12),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  padding: EdgeInsets.only(left: 20),
-                  height: 120,
-                  child: Row(
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
-                        child: Image.asset(
-                          imagePatien[index],
-                          width: 70,
-                          height: 70,
-                        ),
-                      ),
-                      SizedBox(width: 13),
-                      Expanded(
-                        child: DetailDoctors(
-                          titel: namePatient[index],
-                          subTitel: status[index],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            );
-          }
-        },
-      ),
-        bottomNavigationBar: ButtonNavBar(initialIndex: 2)
-    );
-  }
-}
-
-class DetailDoctors extends StatelessWidget {
-  final String? titel;
-  final String? subTitel;
-  final String? date;
-
-  const DetailDoctors({
-    Key? key,
-    this.titel,
-    this.subTitel,
-    this.date,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-        padding: const EdgeInsets.only(top: 26),
-    child: Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-    Row(
-    children: [
-    if (titel != null)
-    TextWidget(
-    title: titel!,
-    titleSize: 19,
-    titleFontWeight: FontWeight.bold,
-    titleColor: Colors.black,
-    ),
-    SizedBox(width: 65),
-    ],
-    ),
-
-    if (subTitel != null)
-    TextWidget(
-    title: subTitel!,
-    titleSize: 19,
-    titleFontWeight: FontWeight.bold,
-    titleColor: Colors.grey,
-    ),
-    if (date != null)
-    TextWidget(
-    title: date!,
-    titleSize: 13,
-    titleFontWeight: FontWeight.bold,
-    titleColor: Colors.grey,
-    ),
-    ],
-    ),
-    );
-  }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-*/
-
-
-
-import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'detail_patient.dart'; // قم بتعديل هذا استيراد حسب اسم الملف الخاص بك
-
-class Patient extends StatefulWidget {
-  const Patient({Key? key});
-
-  @override
-  State<Patient> createState() => _PatientState();
-}
-
-class _PatientState extends State<Patient> {
-  late List<Map<String, dynamic>> completedAppointments;
+  List<Map<String, dynamic>> patients = [];
 
   @override
   void initState() {
     super.initState();
-    getCompletedAppointments();
+    retrievePatients();
   }
 
-  Future<void> getCompletedAppointments() async {
+  Future<void> retrievePatients() async {
     try {
-      QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('CompletedAppointments').get();
+      CollectionReference patientsRef = FirebaseFirestore.instance.collection('patients');
+      QuerySnapshot querySnapshot = await patientsRef.get();
       setState(() {
-        completedAppointments = querySnapshot.docs.map((doc) => doc.data() as Map<String, dynamic>).toList();
+        patients = querySnapshot.docs.map((doc) {
+          return {
+            'id': doc.id,
+            'name': doc['name'],
+            'status': doc['status'],
+          };
+        }).toList();
       });
+      print('Patients retrieved successfully');
     } catch (e) {
-      print("Failed to fetch completed appointments: $e");
+      print('Failed to retrieve patients: $e');
+    }
+  }
+
+  Future<void> addNewPatient(String name, String patientStatus) async {
+    try {
+      CollectionReference patientsRef = FirebaseFirestore.instance.collection('patients');
+      DocumentReference newPatient = await patientsRef.add({
+        'name': name,
+        'status': patientStatus,
+      });
+      setState(() {
+        patients.add({
+          'id': newPatient.id,
+          'name': name,
+          'status': patientStatus,
+        });
+      });
+      print('Patient added successfully');
+    } catch (e) {
+      print('Failed to add patient: $e');
+    }
+  }
+
+  Future<void> deletePatient(String id, int index) async {
+    try {
+      CollectionReference patientsRef = FirebaseFirestore.instance.collection('patients');
+      await patientsRef.doc(id).delete();
+      setState(() {
+        patients.removeAt(index);
+      });
+      print('Patient deleted successfully');
+    } catch (e) {
+      print('Failed to delete patient: $e');
+    }
+  }
+
+
+
+  Future<void> updatePatient(int index) async {
+    try {
+      String currentName = patients[index]['name'];
+      String currentStatus = patients[index]['status'];
+      String currentId = patients[index]['id'];
+
+      // Controllers for text fields
+      TextEditingController _nameController = TextEditingController(text: currentName);
+      TextEditingController _statusController = TextEditingController(text: currentStatus);
+
+      // Show confirmation dialog
+      bool confirmUpdate = await showConfirmationDialog(context);
+      if (confirmUpdate) {
+        // Show update dialog
+        bool updateConfirmed = await showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return StatefulBuilder(
+              builder: (context, setState) {
+                return AlertDialog(
+                  title: Text('Update Patient'),
+                  content: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TextField(
+                        controller: _nameController,
+                        decoration: InputDecoration(labelText: 'Name'),
+                      ),
+                      SizedBox(height: 10),
+                      TextField(
+                        controller: _statusController,
+                        decoration: InputDecoration(labelText: 'Status'),
+                      ),
+                    ],
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop(false); // Cancel update
+                      },
+                      child: Text('Cancel'),
+                    ),
+                    ElevatedButton(
+                      onPressed: () async {
+                        String updatedName = _nameController.text.trim();
+                        String updatedStatus = _statusController.text.trim();
+                        if (updatedName.isNotEmpty && updatedStatus.isNotEmpty) {
+                          // Update patient data in Firestore
+                          await updatePatientData(currentId, updatedName, updatedStatus);
+                          // Update local state
+                          setState(() {
+                            patients[index]['name'] = updatedName;
+                            patients[index]['status'] = updatedStatus;
+                          });
+                          Navigator.of(context).pop(true); // Confirm update
+                        }
+                      },
+                      child: Text('Update'),
+                    ),
+                  ],
+                );
+              },
+            );
+          },
+        );
+
+        // Handle confirmation result
+        if (updateConfirmed == true) {
+          // Show success dialog
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text('Success'),
+                content: Text('Patient updated successfully.'),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Text('OK'),
+                  ),
+                ],
+              );
+            },
+          );
+
+          print('Patient updated successfully');
+        } else {
+          print('Update operation cancelled');
+        }
+      }
+    } catch (e) {
+      print('Failed to update patient: $e');
+    }
+  }
+
+
+
+  Future<bool> showConfirmationDialog(BuildContext context) async {
+    return await showDialog<bool>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Confirm Update'),
+          content: Text('Are you sure you want to update this patient?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(false); // Return false if cancel is pressed
+              },
+              child: Text('Cancel'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop(true); // Return true if update is confirmed
+              },
+              child: Text('Update'),
+            ),
+          ],
+        );
+      },
+    ) ?? false; // Return false by default
+  }
+
+  Future<void> updatePatientData(String id, String updatedName, String updatedStatus) async {
+    try {
+      CollectionReference patientsRef = FirebaseFirestore.instance.collection('patients');
+      await patientsRef.doc(id).update({
+        'name': updatedName,
+        'status': updatedStatus,
+      });
+      print('Patient updated successfully');
+    } catch (e) {
+      print('Failed to update patient: $e');
     }
   }
 
@@ -280,32 +241,36 @@ class _PatientState extends State<Patient> {
         ),
         actions: [
           IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.add),
-          ),
-          IconButton(
             onPressed: () {
-              setState(() {
-                getCompletedAppointments();
-              });
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AddPatientDialog(
+                    onAddPatient: addNewPatient,
+                  );
+                },
+              );
             },
-            icon: Icon(Icons.update),
-          ),
-          IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.delete),
+            icon: Icon(Icons.add),
           ),
         ],
       ),
       body: ListView.builder(
-        itemCount: completedAppointments.length,
+        itemCount: patients.length,
         itemBuilder: (context, index) {
-          final appointment = completedAppointments[index];
           return Padding(
             padding: const EdgeInsets.all(8.0),
             child: GestureDetector(
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) =>  DeatailPatient())); // اختار هنا تفاصيل المريض
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => DeatailPatient(
+                      name: patients[index]['name'],
+                      status: patients[index]['status'],
+                    ),
+                  ),
+                );
               },
               child: Container(
                 decoration: BoxDecoration(
@@ -316,11 +281,10 @@ class _PatientState extends State<Patient> {
                 height: 120,
                 child: Row(
                   children: [
-                    // هنا يمكنك عرض الصورة المطلوبة من Firebase
                     ClipRRect(
                       borderRadius: BorderRadius.circular(20),
                       child: Image.asset(
-                        "assets/images/default_patient_image.png", // استبدل بمسار الصورة من Firebase
+                        imagePatients[index % imagePatients.length],
                         width: 70,
                         height: 70,
                       ),
@@ -328,10 +292,24 @@ class _PatientState extends State<Patient> {
                     SizedBox(width: 13),
                     Expanded(
                       child: DetailDoctors(
-                        titel: appointment['username'],
-                        subTitel: appointment['specialization'],
-                        date: "Completed", // تاريخ التعيين المكتمل
+                        title: patients[index]['name'],
+                        subTitle: patients[index]['status'],
                       ),
+                    ),
+                    IconButton(
+                      onPressed: () async {
+                        await updatePatient(index);
+                        setState(() {
+                          // Update state if needed
+                        });
+                      },
+                      icon: Icon(Icons.edit),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        deletePatient(patients[index]['id'], index);
+                      },
+                      icon: Icon(Icons.delete),
                     ),
                   ],
                 ),
@@ -340,21 +318,16 @@ class _PatientState extends State<Patient> {
           );
         },
       ),
+      bottomNavigationBar: ButtonNavBar(initialIndex: 2),
     );
   }
 }
 
 class DetailDoctors extends StatelessWidget {
-  final String? titel;
-  final String? subTitel;
-  final String? date;
+  final String? title;
+  final String? subTitle;
 
-  const DetailDoctors({
-    Key? key,
-    this.titel,
-    this.subTitel,
-    this.date,
-  }) : super(key: key);
+  const DetailDoctors({Key? key, this.title, this.subTitle}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -363,28 +336,588 @@ class DetailDoctors extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              if (titel != null)
-                Text(
-                  titel!,
-                  style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold, color: Colors.black),
-                ),
-              SizedBox(width: 65),
-            ],
-          ),
-          if (subTitel != null)
-            Text(
-              subTitel!,
-              style: TextStyle(fontSize: 16, color: Colors.grey),
+          if (title != null)
+            TextWidget(
+              title: title!,
+              titleSize: 19,
+              titleFontWeight: FontWeight.bold,
+              titleColor: Colors.black,
             ),
-          if (date != null)
-            Text(
-              date!,
-              style: TextStyle(fontSize: 16, color: Colors.grey),
+          SizedBox(height: 10),
+          if (subTitle != null)
+            TextWidget(
+              title: subTitle!,
+              titleSize: 16,
+              titleColor: Colors.grey,
             ),
         ],
       ),
     );
   }
+}
+
+class AddPatientDialog extends StatefulWidget {
+  final Function(String, String) onAddPatient;
+
+  const AddPatientDialog({Key? key, required this.onAddPatient}) : super(key: key);
+
+  @override
+  _AddPatientDialogState createState() => _AddPatientDialogState();
+}
+
+class _AddPatientDialogState extends State<AddPatientDialog> {
+  late TextEditingController nameController;
+  late TextEditingController statusController;
+
+  @override
+  void initState() {
+    super.initState();
+    nameController = TextEditingController();
+    statusController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    statusController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+        title: Text('Add New Patient'),
+    content: Column(
+    mainAxisSize: MainAxisSize.min,
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+    TextField(
+    controller: nameController,
+    decoration: InputDecoration
+      (labelText: 'Name'),
+    ),
+      SizedBox(height: 10),
+      TextField(
+        controller: statusController,
+        decoration: InputDecoration(labelText: 'Status'),
+      ),
+    ],
+    ),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: Text('Cancel'),
+        ),
+        ElevatedButton(
+          onPressed: () {
+            String name = nameController.text.trim();
+            String status = statusController.text.trim();
+            if (name.isNotEmpty && status.isNotEmpty) {
+              widget.onAddPatient(name, status);
+              Navigator.of(context).pop();
+            }
+          },
+          child: Text('Add'),
+        ),
+      ],
+    );
+  }
+}
+
+class TextWidget extends StatelessWidget {
+  final String title;
+  final double titleSize;
+  final FontWeight titleFontWeight;
+  final Color titleColor;
+
+  const TextWidget({
+    Key? key,
+    required this.title,
+    this.titleSize = 16,
+    this.titleFontWeight = FontWeight.normal,
+    this.titleColor = Colors.black,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      title,
+      style: TextStyle(
+        fontSize: titleSize,
+        fontWeight: titleFontWeight,
+        color: titleColor,
+      ),
+    );
+  }
+}
+*/
+
+
+
+
+
+                        import 'package:flutter/material.dart';
+                        import 'package:cloud_firestore/cloud_firestore.dart';
+
+                        import '../../../../app/widgets/text_widget.dart';
+                        import 'button_nav_bar.dart';
+                        import 'detail_patient.dart';
+
+                        class Patient extends StatefulWidget {
+                        const Patient({Key? key});
+
+                        @override
+                        State<Patient> createState() => _PatientState();
+                        }
+
+                        class _PatientState extends State<Patient> {
+                        List<String> imagePatients = [
+                        "assets/images/pat2.jpeg",
+                        "assets/images/pat3.jpeg",
+                        "assets/images/pat4.jpeg",
+                        "assets/images/pat5.jpeg",
+                        "assets/images/pat6.jpeg",
+                        "assets/images/pat7.jpeg",
+                        "assets/images/pat8.jpeg",
+                        "assets/images/pat9.jpeg",
+                        "assets/images/pat10.jpeg",
+                        "assets/images/pat3.jpeg",
+                        ];
+                        List<Map<String, dynamic>> patients = [];
+
+                        @override
+                        void initState() {
+                        super.initState();
+                        retrievePatients();
+                        }
+
+                        Future<void> retrievePatients() async {
+                        try {
+                        CollectionReference patientsRef = FirebaseFirestore.instance.collection('patients');
+                        QuerySnapshot querySnapshot = await patientsRef.get();
+                        setState(() {
+                        patients = querySnapshot.docs.map((doc) {
+                        return {
+                        'id': doc.id,
+                        'name': doc['name'],
+                        'status': doc['status'],
+                        };
+                        }).toList();
+                        });
+                        print('Patients retrieved successfully');
+                        } catch (e) {
+                        print('Failed to retrieve patients: $e');
+                        }
+                        }
+
+                        Future<void> addNewPatient(String name, String patientStatus) async {
+                        try {
+                        CollectionReference patientsRef = FirebaseFirestore.instance.collection('patients');
+                        DocumentReference newPatient = await patientsRef.add({
+                        'name': name,
+                        'status': patientStatus,
+                        });
+                        setState(() {
+                        patients.add({
+                        'id': newPatient.id,
+                        'name': name,
+                        'status': patientStatus,
+                        });
+                        });
+                        print('Patient added successfully');
+                        } catch (e) {
+                        print('Failed to add patient: $e');
+                        }
+                        }
+
+                        Future<void> deletePatient(String id, int index) async {
+                        try {
+                        CollectionReference patientsRef = FirebaseFirestore.instance.collection('patients');
+                        await patientsRef.doc(id).delete();
+                        setState(() {
+                        patients.removeAt(index);
+                        });
+                        print('Patient deleted successfully');
+                        } catch (e) {
+                        print('Failed to delete patient: $e');
+                        }
+                        }
+
+                        Future<void> updatePatient(int index) async {
+                        try {
+                        String currentName = patients[index]['name'];
+                        String currentStatus = patients[index]['status'];
+                        String currentId = patients[index]['id'];
+
+                        // Controllers for text fields
+                        TextEditingController _nameController = TextEditingController(text: currentName);
+                        TextEditingController _statusController = TextEditingController(text: currentStatus);
+
+                        // Show confirmation dialog
+                        bool confirmUpdate = await showConfirmationDialog(context);
+                        if (confirmUpdate) {
+                        // Show update dialog
+                        bool updateConfirmed = await showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                        return StatefulBuilder(
+                        builder: (context, setState) {
+                        return AlertDialog(
+                        title: Text('Update Patient'),
+                        content: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                        TextField(
+                        controller: _nameController,
+                        decoration: InputDecoration(labelText: 'Name'),
+                        ),
+                        SizedBox(height: 10),
+                        TextField(
+                        controller: _statusController,
+                        decoration: InputDecoration(labelText: 'Status'),
+                        ),
+                        ],
+                        ),
+                        actions: [
+                        TextButton(
+                        onPressed: () {
+                        Navigator.of(context).pop(false); // Cancel update
+                        },
+                        child: Text('Cancel'),
+                        ),
+                        ElevatedButton(
+                        onPressed: () async {
+                        String updatedName = _nameController.text.trim();
+                        String updatedStatus = _statusController.text.trim();
+                        if (updatedName.isNotEmpty && updatedStatus.isNotEmpty) {
+                        // Update patient data in Firestore
+                        await updatePatientData(currentId, updatedName, updatedStatus);
+                        // Update local state
+                        setState(() {
+                        patients[index]['name'] = updatedName;
+                        patients[index]['status'] = updatedStatus;
+                        });
+                        Navigator.of(context).pop(true); // Confirm update
+                        // Show success dialog after updating patient
+                        showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                        return AlertDialog(
+                        title: Text('Success'),
+                        content: Text('Patient updated successfully.'),
+                        actions: [
+                        TextButton(
+                        onPressed: () {
+                        Navigator.of(context).pop();
+                        },
+                        child: Text('OK'),
+                        ),
+                        ],
+                        );
+                        },
+                        );
+                        }
+                        },
+                        child: Text('Update'),
+                        ),
+                        ],
+                        );
+                        },
+                        );
+                        },
+                        );
+
+                        // Handle confirmation result
+                        if (updateConfirmed == true) {
+                        print('Patient updated successfully');
+                        } else {
+                        print('Update operation cancelled');
+                        }
+                        }
+                        } catch (e) {
+                        print('Failed to update patient: $e');
+                        }
+                        }
+
+                        Future<bool> showConfirmationDialog(BuildContext context) async {
+                        return await showDialog<bool>(
+                        context: context,
+                        builder: (BuildContext context) {
+                        return AlertDialog(
+                        title: Text('Confirm Update'),
+                        content: Text('Are you sure you want to update this patient?'),
+                        actions: [
+                        TextButton(
+                        onPressed: () {
+                        Navigator.of(context).pop(false); // Return false if cancel is pressed
+                        },
+                        child: Text('Cancel'),
+                        ),
+                        ElevatedButton(
+                        onPressed: () {
+                        Navigator.of(context).pop(true); // Return true if update is confirmed
+                        },
+                        child: Text('Update'),
+                        ),
+                        ],
+                        );
+                        },
+                        ) ?? false; // Return false by default
+                        }
+
+                        Future<void> updatePatientData(String id, String updatedName, String updatedStatus) async {
+                        try {
+                        CollectionReference patientsRef = FirebaseFirestore.instance.collection('patients');
+                        await patientsRef.doc(id).update({
+                        'name': updatedName,
+                        'status': updatedStatus,
+                        });
+                        print('Patient updated successfully');
+                        } catch (e) {
+                        print('Failed to update patient: $e');
+                        }
+                        }
+
+                        @override
+                        Widget build(BuildContext context) {
+                        return Scaffold(
+                        appBar: AppBar(
+                        title: Center(
+                        child: Text(
+                        "All Patients",
+                        style: TextStyle(fontSize: 25, color: Colors.black),
+),
+),
+actions: [
+IconButton(
+onPressed: () {
+showDialog(
+context: context,
+builder: (BuildContext context) {
+return AddPatientDialog(
+onAddPatient: addNewPatient,
+);
+},
+);
+},
+icon: Icon(Icons.add),
+),
+],
+),
+body: ListView.builder(
+itemCount: patients.length,
+itemBuilder: (context, index) {
+return Padding(
+padding: const EdgeInsets.all(8.0),
+child: GestureDetector(
+onTap: () {
+Navigator.push(
+context,
+MaterialPageRoute(
+builder: (context) => DeatailPatient(
+name: patients[index]['name'],
+status: patients[index]['status'],
+),
+),
+);
+},
+child: Container(
+decoration: BoxDecoration(
+border: Border.all(color: Colors.black12),
+borderRadius: BorderRadius.circular(12),
+),
+padding: EdgeInsets.only(left: 20),
+height: 120,
+child: Row(
+children: [
+ClipRRect(
+borderRadius: BorderRadius.circular(20),
+child: Image.asset(
+imagePatients[index % imagePatients.length],
+width: 70,
+height: 70,
+),
+),
+SizedBox(width: 13),
+Expanded(
+child: DetailDoctors(
+title: patients[index]['name'],
+subTitle: patients[index]['status'],
+),
+),
+IconButton(
+onPressed: () async {
+await updatePatient(index);
+setState(() {
+// Update state if needed
+});
+},
+icon: Icon(Icons.edit),
+),
+IconButton(
+onPressed: () {
+deletePatient(patients[index]['id'], index);
+},
+icon: Icon(Icons.delete),
+),
+],
+),
+),
+),
+);
+},
+),
+bottomNavigationBar: ButtonNavBar(initialIndex: 2),
+);
+}
+}
+
+class DetailDoctors extends StatelessWidget {
+final String? title;
+final String? subTitle;
+
+const DetailDoctors({Key? key, this.title, this.subTitle}) : super(key: key);
+
+@override
+Widget build(BuildContext context) {
+return Padding(
+padding: const EdgeInsets.only(top: 26),
+child: Column(
+crossAxisAlignment: CrossAxisAlignment.start,
+children: [
+if (title != null)
+TextWidget(
+title: title!,
+titleSize: 19,
+titleFontWeight: FontWeight.bold,
+titleColor: Colors.black,
+),
+SizedBox(height: 10),
+if (subTitle != null)
+TextWidget(
+title: subTitle!,
+titleSize: 16,
+titleColor: Colors.grey,
+),
+],
+),
+);
+}
+}
+
+class AddPatientDialog extends StatefulWidget {
+final Function(String, String) onAddPatient;
+
+const AddPatientDialog({Key? key, required this.onAddPatient}) : super(key: key);
+
+@override
+_AddPatientDialogState createState() => _AddPatientDialogState();
+}
+
+class _AddPatientDialogState extends State<AddPatientDialog> {
+late TextEditingController nameController;
+late TextEditingController statusController;
+
+@override
+void initState() {
+super.initState();
+nameController = TextEditingController();
+statusController = TextEditingController();
+}
+
+@override
+void dispose() {
+nameController.dispose();
+statusController.dispose();
+super.dispose();
+}
+
+@override
+Widget build(BuildContext context) {
+return AlertDialog(
+title: Text('Add New Patient'),
+content: Column(
+mainAxisSize: MainAxisSize.min,
+crossAxisAlignment: CrossAxisAlignment.start,
+children: [
+TextField(
+controller: nameController,
+decoration: InputDecoration(labelText: 'Name'),
+),
+SizedBox(height: 10),
+TextField(
+controller: statusController,
+decoration: InputDecoration(labelText: 'Status'),
+),
+],
+),
+actions: [
+TextButton(
+onPressed: () {
+Navigator.of(context).pop();
+},
+child: Text('Cancel'),
+),
+ElevatedButton(
+onPressed: () {
+String name = nameController.text.trim();
+String status = statusController.text.trim();
+if (name.isNotEmpty && status.isNotEmpty) {
+widget.onAddPatient(name, status);
+Navigator.of(context).pop();
+// Show success dialog after adding patient
+showDialog(
+context: context,
+builder: (BuildContext context) {
+return AlertDialog(
+title: Text('Success'),
+content: Text('Patient added successfully.'),
+actions: [
+TextButton(
+onPressed: () {
+Navigator.of(context).pop();
+},
+child: Text('OK'),
+),
+],
+);
+},
+);
+}
+},
+child: Text('Add'),
+),
+],
+);
+}
+}
+
+class TextWidget extends StatelessWidget {
+final String title;
+final double titleSize;
+final FontWeight titleFontWeight;
+final Color titleColor;
+
+const TextWidget({
+Key? key,
+required this.title,
+this.titleSize = 16,
+this.titleFontWeight = FontWeight.normal,
+this.titleColor = Colors.black,
+}) : super(key: key);
+
+@override
+Widget build(BuildContext context) {
+return Text(
+title,
+style: TextStyle(
+fontSize: titleSize,
+fontWeight: titleFontWeight,
+color: titleColor,
+),
+);
+}
 }

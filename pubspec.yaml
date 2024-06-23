@@ -31,7 +31,7 @@ dependencies:
   http_interceptor: ^1.0.2
   image_picker: ^1.1.2
   lottie: any
-  url_launcher: ^6.1.10
+  url_launcher: ^6.1.6
   overlay_support: ^2.1.0
   pinput: ^2.2.31
   carousel_slider: ^4.2.1
@@ -61,6 +61,7 @@ dependencies:
   cloud_firestore: ^4.17.5
   modal_progress_hud_nsn: ^0.5.1
   firebase_storage: ^11.7.7
+  video_player: ^2.8.7
   #flutter_sound: ^9.6.0
 
 

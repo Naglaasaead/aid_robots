@@ -21,7 +21,9 @@ import 'features/auth_feature/presentation/screens/Home.dart';
 import 'features/auth_feature/presentation/screens/Video.dart';
 import 'features/auth_feature/presentation/screens/appointment.dart';
 import 'features/auth_feature/presentation/screens/chat1.dart';
+import 'features/auth_feature/presentation/screens/chat2.dart';
 import 'features/auth_feature/presentation/screens/login_chat.dart';
+import 'features/auth_feature/presentation/screens/patients.dart';
 import 'features/auth_feature/presentation/screens/reg_chat.dart';
 import 'features/auth_feature/presentation/screens/splashScreen.dart';
   // Import the Agora page
@@ -93,7 +95,7 @@ class MyApp extends StatelessWidget {
               );
             },
             //home:_auth.currentUser!=null? ChatScreen():WelcomeScreen() ,
-            home: Appointment(),
+            home: Chat2(),
             //initialRoute:  WelcomeScreen.ScreenRoute ,
            /* routes: {
               WelcomeScreen.ScreenRoute:(context)=> WelcomeScreen(),
