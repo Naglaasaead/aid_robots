@@ -1,9 +1,17 @@
 import 'package:aid_robot/app/widgets/text_widget.dart';
 import 'package:aid_robot/features/auth_feature/presentation/screens/cancel_alert.dart';
+import 'package:aid_robot/features/auth_feature/presentation/screens/patient2.dart';
+import 'package:aid_robot/features/auth_feature/presentation/screens/patient3.dart';
+import 'package:aid_robot/features/auth_feature/presentation/screens/patient4.dart';
+import 'package:aid_robot/features/auth_feature/presentation/screens/patient5.dart';
+import 'package:aid_robot/features/auth_feature/presentation/screens/patients.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+import 'Patient6.dart';
 import 'button_nav_bar.dart';
+import 'chat1.dart';
+import 'chat2.dart';
 
 class Appointment extends StatefulWidget {
   const Appointment({Key? key}) : super(key: key);
@@ -29,17 +37,13 @@ class _AppointmentState extends State<Appointment> with SingleTickerProviderStat
   @override
   void initState() {
     super.initState();
-    getData();
-    addData();
     tabController = TabController(length: 3, vsync: this);
   }
 
-  Future<void> getData() async {
+  Future<List<Map<String, dynamic>>> getData() async {
     CollectionReference doctorRef = FirebaseFirestore.instance.collection('Doctors');
     QuerySnapshot querySnapshot = await doctorRef.get();
-    setState(() {
-      doctors = querySnapshot.docs.map((doc) => doc.data() as Map<String, dynamic>).toList();
-    });
+    return querySnapshot.docs.map((doc) => doc.data() as Map<String, dynamic>).toList();
   }
 
   addData() async {
@@ -53,26 +57,7 @@ class _AppointmentState extends State<Appointment> with SingleTickerProviderStat
     } catch (e) {
       print("Failed to add data: $e");
     }
-
-
   }
-  Future<void> showLoading(BuildContext context) {
-    return showDialog<void>(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          content: Row(
-            children: [
-              Container(height:50,child: Center(child: CircularProgressIndicator())),
-              SizedBox(width: 20),
-              Text("Loading..."),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
 
   @override
   Widget build(BuildContext context) {
@@ -149,13 +134,27 @@ class _AppointmentState extends State<Appointment> with SingleTickerProviderStat
           },
         ),
       ),
-      body: TabBarView(
-        controller: tabController,
-        children: [
-          buildListView(searchResults.isNotEmpty ? searchResults : doctors, true),
-          buildListView(searchResults.isNotEmpty ? searchResults : doctors, false),
-          buildListView(searchResults.isNotEmpty ? searchResults : doctors, false),
-        ],
+      body: FutureBuilder<List<Map<String, dynamic>>>(
+        future: getData(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            return Center(child: Text('No data found'));
+          } else {
+            doctors = snapshot.data!;
+            return TabBarView(
+              controller: tabController,
+              children: [
+                buildListView(searchResults.isNotEmpty ? searchResults : doctors, true),
+                buildListView(searchResults.isNotEmpty ? searchResults : doctors, false),
+                buildListView(searchResults.isNotEmpty ? searchResults : doctors, false),
+              ],
+            );
+          }
+        },
       ),
       bottomNavigationBar: ButtonNavBar(initialIndex: 3),
     );
@@ -189,17 +188,17 @@ class _AppointmentState extends State<Appointment> with SingleTickerProviderStat
                 ),
               ),
               SizedBox(height: 10),
-              isUpcoming ? Row(
+              isUpcoming
+                  ? Row(
                 children: [
                   SizedBox(width: 10),
                   ElevatedButton(
                     onPressed: () {
                       addData();
                     },
-                    child: TextWidget(
-                      title: "Cancel Appointment",
-                      titleSize: 14,
-                      titleColor: Colors.blueAccent,
+                    child: Text(
+                      "Cancel Appointment",
+                      style: TextStyle(fontSize: 14, color: Colors.blue),
                     ),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.white,
@@ -210,24 +209,38 @@ class _AppointmentState extends State<Appointment> with SingleTickerProviderStat
                   SizedBox(width: 5),
                   ElevatedButton(
                     onPressed: () {
-                     /* Navigator.push(
+                      Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => Patient()),
-                      );*/
+                        MaterialPageRoute(builder: (context) {
+                          switch (index % 6) {
+                            case 0:
+                              return Patient();
+                            case 1:
+                              return Patient2();
+                            case 2:
+                              return Patient3();
+                            case 3:
+                              return Patient4();
+                            case 4:
+                              return Patient5();
+                            default:
+                              return Patient6();
+                          }
+                        }),
+                      );
                     },
-                    child: TextWidget(
-                      title: "Reschedule",
-                      titleSize: 16,
-                      titleColor: Colors.white,
+                    child: Text(
+                      "Reschedule",
+                      style: TextStyle(color: Colors.white, fontSize: 16),
                     ),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.blueAccent,
                       fixedSize: Size(175, 35),
                     ),
                   ),
-
                 ],
-              ) : Container(),
+              )
+                  : Container(),
               SizedBox(height: 10),
             ],
           );
@@ -244,7 +257,6 @@ class _AppointmentState extends State<Appointment> with SingleTickerProviderStat
     );
   }
 
-
   Padding DetailDoctors({String? titel, String? subTitel, String? date}) {
     return Padding(
       padding: const EdgeInsets.only(top: 26),
@@ -253,26 +265,25 @@ class _AppointmentState extends State<Appointment> with SingleTickerProviderStat
         children: [
           Row(
             children: [
-              if (titel != null) TextWidget(
-                title: titel,
-                titleSize: 19,
-                titleFontWeight: FontWeight.bold,
-                titleColor: Colors.black,
-              ),
+              if (titel != null)
+                Text(
+                  titel,
+                  style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold, color: Colors.black),
+                ),
               SizedBox(width: 65),
               if (titel != null) Icon(Icons.chat, color: Colors.blueAccent),
             ],
           ),
-          if (subTitel != null) TextWidget(
-            title: subTitel,
-            titleSize: 16,
-            titleColor: Colors.grey,
-          ),
-          if (date != null) TextWidget(
-            title: date,
-            titleSize: 16,
-            titleColor: Colors.grey,
-          ),
+          if (subTitel != null)
+            Text(
+              subTitel,
+              style: TextStyle(fontSize: 16, color: Colors.grey),
+            ),
+          if (date != null)
+            Text(
+              date,
+              style: TextStyle(fontSize: 16, color: Colors.grey),
+            ),
         ],
       ),
     );

@@ -34,6 +34,7 @@ dependencies:
   url_launcher: ^6.1.6
   overlay_support: ^2.1.0
   pinput: ^2.2.31
+
   carousel_slider: ^4.2.1
   bloc: ^8.1.2
   banners: ^0.3.1
@@ -62,6 +63,8 @@ dependencies:
   modal_progress_hud_nsn: ^0.5.1
   firebase_storage: ^11.7.7
   video_player: ^2.8.7
+  firebase_analytics: ^10.10.7
+  awesome_dialog: ^3.2.1
   #flutter_sound: ^9.6.0
 
 

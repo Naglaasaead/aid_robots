@@ -92,17 +92,19 @@ class _ChatScreenState extends State<ChatScreen> {
       'time': FieldValue.serverTimestamp(),
     };
 
+    // Include image URL if present
     if (imageUrl != null && imageUrl.isNotEmpty) {
       messageMap['imageUrl'] = imageUrl;
     }
 
+    // Include text if present and not "No message"
     if (text != null && text.isNotEmpty && text != "No message") {
       messageMap['text'] = text;
     }
 
     try {
+      // Only send the message if either text or imageUrl is present
       if (messageMap.containsKey('text') || messageMap.containsKey('imageUrl')) {
-        // Only send the message if either text or imageUrl is present
         await _fireStore.collection('messages').doc(autoID).set(messageMap);
         setState(() {
           messageText = null;
@@ -116,6 +118,7 @@ class _ChatScreenState extends State<ChatScreen> {
       print("Error sending message: $e");
     }
   }
+
 
 
 
@@ -193,12 +196,29 @@ class _ChatScreenState extends State<ChatScreen> {
         elevation: 0,
         title: Row(
           children: [
+            InkWell(
+              onTap: () {
+               // urlLauncher('phone');
+              },
+              child: Container(
+                width: 30,
+                height: 30,
+                padding: EdgeInsets.all(4.0),
+                margin: EdgeInsets.all(8.0),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  //color: Colors.green,
+                ),
+                child: Icon(Icons.phone, color: Colors.black87),
+              ),
+            ),
+            SizedBox(width: 15),
             Image.asset(
               "assets/images/whatsab.png",
               height: 25,
             ),
             SizedBox(width: 15),
-            Text("MessageMe"),
+            Text("MessageMe",style: TextStyle(color: Colors.black87),),
           ],
         ),
         actions: [
@@ -275,6 +295,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       size: 24.0,
                     ),
                   ),
+
                   TextButton(
                     onPressed: () {
                       messageTextController.clear();

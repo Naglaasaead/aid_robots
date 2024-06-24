@@ -21,12 +21,10 @@ import 'features/auth_feature/presentation/screens/Home.dart';
 import 'features/auth_feature/presentation/screens/Video.dart';
 import 'features/auth_feature/presentation/screens/appointment.dart';
 import 'features/auth_feature/presentation/screens/chat1.dart';
-import 'features/auth_feature/presentation/screens/chat2.dart';
 import 'features/auth_feature/presentation/screens/login_chat.dart';
-import 'features/auth_feature/presentation/screens/patients.dart';
 import 'features/auth_feature/presentation/screens/reg_chat.dart';
 import 'features/auth_feature/presentation/screens/splashScreen.dart';
-  // Import the Agora page
+// Import the Agora page
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,7 +32,7 @@ void main() async {
   await EasyLocalization.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
-   name: 'secondaryApp',
+    name: 'secondaryApp',
   );
   FireBaseNotification firebaseNotification = FireBaseNotification();
   firebaseNotification.getToken();
@@ -58,7 +56,7 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-   MyApp({Key? key}) : super(key: key);
+  MyApp({Key? key}) : super(key: key);
   final _auth=FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
@@ -82,7 +80,7 @@ class MyApp extends StatelessWidget {
             locale: context.locale,
             title: 'Graduation Project',
             theme: graduationProjectTheme(),
-          /*  theme: ThemeData(
+            /*  theme: ThemeData(
               primarySwatch: Colors.blue,
               visualDensity: VisualDensity.adaptivePlatformDensity,
             ),*/
@@ -95,9 +93,9 @@ class MyApp extends StatelessWidget {
               );
             },
             //home:_auth.currentUser!=null? ChatScreen():WelcomeScreen() ,
-            home: Chat2(),
+            home: Appointment(),
             //initialRoute:  WelcomeScreen.ScreenRoute ,
-           /* routes: {
+            /* routes: {
               WelcomeScreen.ScreenRoute:(context)=> WelcomeScreen(),
               LoginChat.ScreenRoute:(context)=> LoginChat(),
               Registration.ScreenRoute:(context)=> Registration(),
