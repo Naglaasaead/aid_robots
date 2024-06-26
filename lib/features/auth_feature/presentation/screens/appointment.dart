@@ -7,7 +7,6 @@ import 'package:aid_robot/features/auth_feature/presentation/screens/patient5.da
 import 'package:aid_robot/features/auth_feature/presentation/screens/patients.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
 import 'Patient6.dart';
 import 'button_nav_bar.dart';
 import 'chat1.dart';
@@ -126,7 +125,7 @@ class _AppointmentState extends State<Appointment> with SingleTickerProviderStat
           controller: tabController,
           tabs: [
             Tab(text: 'Upcoming'),
-            Tab(text: 'Completed'),
+            Tab(text: 'OffLine'),
             Tab(text: 'Cancelled'),
           ],
           onTap: (index) {
@@ -271,7 +270,7 @@ class _AppointmentState extends State<Appointment> with SingleTickerProviderStat
                   style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold, color: Colors.black),
                 ),
               SizedBox(width: 65),
-              if (titel != null) Icon(Icons.chat, color: Colors.blueAccent),
+              //if (titel != null) Icon(Icons.chat, color: Colors.blueAccent),
             ],
           ),
           if (subTitel != null)

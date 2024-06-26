@@ -11,12 +11,12 @@ class Chat2 extends StatefulWidget {
 Future<void> urlLauncher(String name) async {
   String urlString = '';
   if (name == "phone") {
-    urlString = "tel:+201117521686";
+    urlString = "tel:+201550344738";
   } else if (name == "facebook") {
     urlString = "https://www.facebook.com/profile";
   }
   else if (name == "whatsApp") {
-    urlString =  "https://wa.me/201117521686";
+    urlString =  "https://wa.me/201550344738";
   }
 
   Uri url = Uri.parse(urlString);

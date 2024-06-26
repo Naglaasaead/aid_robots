@@ -11,11 +11,6 @@ import 'package:flutter_chat_bubble/clippers/chat_bubble_clipper_3.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-final _fireStore = FirebaseFirestore.instance;
-late User signedInUser;
-XFile? imageCamera;
-ImagePicker? imagePicker;
 Future<void> urlLauncher(String name) async {
   String urlString = '';
   if (name == "phone") {
@@ -35,15 +30,20 @@ Future<void> urlLauncher(String name) async {
     throw Exception('Could not launch $urlString');
   }
 }
-class ChatScreen extends StatefulWidget {
+final _fireStore = FirebaseFirestore.instance;
+late User signedInUser;
+XFile? imageCamera;
+ImagePicker? imagePicker;
+
+class ChatScreen2 extends StatefulWidget {
   static const String ScreenRoute = 'chat_screen';
-  const ChatScreen({Key? key}) : super(key: key);
+  const ChatScreen2({Key? key}) : super(key: key);
 
   @override
-  State<ChatScreen> createState() => _ChatScreenState();
+  State<ChatScreen2> createState() => _ChatScreenState();
 }
 
-class _ChatScreenState extends State<ChatScreen> {
+class _ChatScreenState extends State<ChatScreen2> {
   final _auth = FirebaseAuth.instance;
   File? file;
   String? messageText;
@@ -101,7 +101,7 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   Future<void> sendMessage({String? text, String? imageUrl}) async {
-    DocumentReference docRef = _fireStore.collection('messages').doc();
+    DocumentReference docRef = _fireStore.collection('Message2').doc();
     String autoID = docRef.id;
 
     // Construct the message map
@@ -132,12 +132,12 @@ class _ChatScreenState extends State<ChatScreen> {
     try {
       // Only send the message if either text or imageUrl is present
       //if (messageMap.containsKey('text') || messageMap.containsKey('imageUrl')) {
-        await _fireStore.collection('messages').doc(autoID).set(messageMap);
-        setState(() {
-          messageText = null;
-          file = null;
-        });
-        messageTextController.clear();
+      await _fireStore.collection('Message2').doc(autoID).set(messageMap);
+      setState(() {
+        messageText = null;
+        file = null;
+      });
+      messageTextController.clear();
       // } else {
       //   print('No valid message to send.');
       // }
@@ -225,7 +225,7 @@ class _ChatScreenState extends State<ChatScreen> {
           children: [
             InkWell(
               onTap: () {
-               // urlLauncher('phone');
+                // urlLauncher('phone');
               },
               child: InkWell(
                 onTap: () {
@@ -244,8 +244,8 @@ class _ChatScreenState extends State<ChatScreen> {
                 ),
               ),
             ),
-            //SizedBox(width: 7),
-            /*Image.asset(
+           /* SizedBox(width: 15),
+            Image.asset(
               "assets/images/whatsab.png",
               height: 25,
             ),*/
@@ -355,7 +355,7 @@ class MessageStreamBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: _fireStore.collection('messages').orderBy('time', descending: true).snapshots(),
+      stream: _fireStore.collection('Message2').orderBy('time', descending: true).snapshots(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(
@@ -454,19 +454,19 @@ class MessageLine extends StatelessWidget {
               return
                 text!=""?
                 ChatBubble(
-                clipper: isMe ? ChatBubbleClipper3(type: BubbleType.sendBubble) :
-                ChatBubbleClipper3(type: BubbleType.receiverBubble),
-                alignment: isMe ? Alignment.topRight : Alignment.topLeft,
-                margin: EdgeInsets.only(top: 10),
-                backGroundColor: isMe ? Colors.blue[800]! : Colors.black87,
-                child: Padding(
-                  padding: const EdgeInsets.all(5.0),
-                  child: Text(
-                    text,
-                    style: TextStyle(fontSize: 15, color: Colors.white),
+                  clipper: isMe ? ChatBubbleClipper3(type: BubbleType.sendBubble) :
+                  ChatBubbleClipper3(type: BubbleType.receiverBubble),
+                  alignment: isMe ? Alignment.topRight : Alignment.topLeft,
+                  margin: EdgeInsets.only(top: 10),
+                  backGroundColor: isMe ? Colors.blue[800]! : Colors.black87,
+                  child: Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: Text(
+                      text,
+                      style: TextStyle(fontSize: 15, color: Colors.white),
+                    ),
                   ),
-                ),
-              )
+                )
                     :
                 SizedBox();
             },

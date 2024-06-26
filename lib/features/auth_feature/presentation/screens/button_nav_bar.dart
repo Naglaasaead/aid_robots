@@ -1,3 +1,4 @@
+import 'package:aid_robot/features/auth_feature/presentation/screens/allChat.dart';
 import 'package:aid_robot/features/auth_feature/presentation/screens/patients.dart';
 import 'package:aid_robot/features/auth_feature/presentation/screens/pop_up.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +20,7 @@ class _ButtonNavBarState extends State<ButtonNavBar> {
 
   final List<Widget> _pages = [
     HomePatient(),
-    PopUp(),
+    AllChatUser(),
     Patient(),
     Appointment(),
   ];
@@ -48,8 +49,8 @@ class _ButtonNavBarState extends State<ButtonNavBar> {
           label: 'Home',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.search),
-          label: 'Search',
+          icon: Icon(Icons.chat),
+          label: 'Chat',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.mic_external_on_outlined),
@@ -60,10 +61,10 @@ class _ButtonNavBarState extends State<ButtonNavBar> {
           label: 'Doctor',
         ),
       ],
-      selectedIconTheme: IconThemeData(color: Colors.white, size: 30), // لون وحجم الرموز المحددة
-      unselectedIconTheme: IconThemeData(color: Colors.grey), // لون وحجم الرموز غير المحددة
+      selectedIconTheme: IconThemeData(color: Colors.blue, size: 30), // لون وحجم الرموز المحددة
+      unselectedIconTheme: IconThemeData(color: Colors.blue), // لون وحجم الرموز غير المحددة
       backgroundColor: Colors.blueAccent,
-      fixedColor: Colors.white,
+      fixedColor: Colors.blue,
       // خلفية الزر
     );
   }

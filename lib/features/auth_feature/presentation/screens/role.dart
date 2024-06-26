@@ -78,8 +78,18 @@ class _RolePageState extends State<RolePage> {
                           },
                         ),
                         RadioListTile<String>(
-                          title: Text('I am a Pharm'),
+                          title: Text('I am a Nurse'),
                           value: 'Option 3',
+                          groupValue: _selectedValue,
+                          onChanged: (value) {
+                            setState(() {
+                              _selectedValue = value;
+                            });
+                          },
+                        ),
+                        RadioListTile<String>(
+                          title: Text('I am a Manager'),
+                          value: 'Option 4',
                           groupValue: _selectedValue,
                           onChanged: (value) {
                             setState(() {

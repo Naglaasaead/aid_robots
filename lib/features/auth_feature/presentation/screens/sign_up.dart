@@ -487,7 +487,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         phone: phoneController.text,
                                       );
                                       Fluttertoast.showToast(
-                                        msg: "تم التسجيل بنجاح",
+                                        msg: "successfully registered",
                                         toastLength: Toast.LENGTH_SHORT,
                                         gravity: ToastGravity.BOTTOM,
                                         timeInSecForIosWeb: 1,
@@ -504,7 +504,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     }
                                     else {
                                       Fluttertoast.showToast(
-                                        msg: "حدث خطأ ما، حاول مرة أخرى",
+                                        msg: "Something went wrong, try again",
                                         toastLength: Toast.LENGTH_SHORT,
                                         gravity: ToastGravity.BOTTOM,
                                         timeInSecForIosWeb: 1,

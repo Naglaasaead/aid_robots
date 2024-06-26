@@ -767,7 +767,7 @@ class _LoginScreenState extends State<LoginScreens> {
           if (state is SuccessState) {
             print("Login Successful!");
             Fluttertoast.showToast(
-              msg: "تم التسجيل بنجاح",
+              msg: "successfully registered",
               toastLength: Toast.LENGTH_SHORT,
               gravity: ToastGravity.BOTTOM,
               timeInSecForIosWeb: 1,
@@ -782,7 +782,7 @@ class _LoginScreenState extends State<LoginScreens> {
           } else if (state is ErrorState) {
             print("Login Failed: ${state.error}");
             Fluttertoast.showToast(
-              msg: "حدث خطأ أثناء التسجيل",
+              msg: "An error occurred during registration",
               toastLength: Toast.LENGTH_SHORT,
               gravity: ToastGravity.BOTTOM,
               timeInSecForIosWeb: 1,
