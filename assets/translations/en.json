@@ -1,7 +1,9 @@
 {
 "ProvideGood": "To provide you with good To",
+  "good": "Provide Good",
+  "Blow": "role Below",
 "experience": "experience, please select your",
-"roleBelow: ": "role below: ",
+"roleBelow:": "role below: ",
 "TailorExperience": "Tailor Your Experience",
 "Patient": "I am a Patient",
 "doctor": "I am a Doctor",
@@ -53,6 +55,8 @@
   "SEEALL": "SEE ALL",
   "PatientDetails": "Patient Details",
   "Name": "Name",
+  "Next": "Next",
+  "Skip": "Skip",
   "Age": "Age",
   "Status": "Status",
   "RoomNumber": "Room Number",
@@ -82,6 +86,18 @@
   "DRZain ": "DR Zain Mostafa",
   "heart": "heart",
   "eyes": "eyes",
-  "DRGana ": "DR Gana Ahmed"
+  "DRGana ": "DR Gana Ahmed",
+  "SeamlessDoctor": "Seamless Doctor",
+  "Connections": "Connections",
+  "Medications": "Medications at Your",
+  "Doorstep": "Doorstep",
+  "FindPharmacies": "Find Pharmacies",
+  "Nearby": "Nearby",
+  "provide": "To provide you with good",
+  "experience": "experience, please select your",
+  "below:": "role below:"
+
+
+
 
 }

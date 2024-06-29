@@ -1,7 +1,9 @@
 {
   "ProvideGood": "لتوفر لك الخير ",
   "experience": "الخبرة، الرجاء تحديد الخاص بك",
-  "roleBelow: ": "الدور أدناه: ",
+  "roleBelow:": "الدور أدناه: ",
+  "good": "تقديم الخير",
+  "Blow": "الدور أدناه",
   "TailorExperience": "خصص تجربتك",
   "Patient": "أنا مريض",
   "doctor": "أنا طبيب",
@@ -68,8 +70,9 @@
   "Error": "خطا :  ",
   "NotData": "لاتوجد معلومات",
   "DRNaglaaSaeed": "دكتوره نجلاء سعيد  :",
-  "interior": "باطنى"
-,
+  "interior": "باطنى",
+  "Next": "التالى",
+  "Skip": "تخطى",
   "WED": "الاتنين, 17 مايو | 8.30 ص",
   "Yellow": "إلغاء التعيين",
   "Reschedule": "إعادة جدولة",
@@ -82,6 +85,16 @@
   "DRZain ": "دكتور زين مصطفى ",
   "heart": "قلب",
   "eyes": "عيون",
-  "DRGana ": "دكتوره جنا احمد "
+  "DRGana ": "دكتوره جنا احمد ",
+  "SeamlessDoctor": "دكتور سلس",
+  "Connections":"اتصال",
+  "MedicamentName": "الأدوية",
+  "Doorstep": "عتبة الباب",
+  "FindPharmacies":"البحث عن الصيدليات",
+  "Nearby": "مجاور",
+  "provide": "ليقدم لك الخير",
+  "experience": "الخبرة، الرجاء تحديد الخاص بك",
+  "below:": "الدور أدناه:"
+
 
 }

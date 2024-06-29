@@ -1,3 +1,4 @@
+/*
 
 
 import 'package:flutter/material.dart';
@@ -533,3 +534,462 @@ class _AddPatientDialogState extends State<AddPatientDialog> {
 
 
 
+*/
+import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+import '../../../../app/widgets/text_widget.dart';
+import 'button_nav_bar.dart';
+import 'detail_patient.dart';
+
+class Patient6 extends StatefulWidget {
+  const Patient6({Key? key});
+
+  @override
+  State<Patient6> createState() => _PatientState();
+}
+
+class _PatientState extends State<Patient6> {
+  List<String> imagePatients = [
+    "assets/images/pat2.jpeg",
+    "assets/images/pat3.jpeg",
+    "assets/images/pat4.jpeg",
+    "assets/images/pat5.jpeg",
+    "assets/images/pat6.jpeg",
+    "assets/images/pat7.jpeg",
+    "assets/images/pat8.jpeg",
+    "assets/images/pat9.jpeg",
+    "assets/images/pat10.jpeg",
+    "assets/images/pat3.jpeg",
+  ];
+  List<Map<String, dynamic>> patients = [];
+  bool isLoading = false; // مؤشر تحميل
+
+  @override
+  void initState() {
+    super.initState();
+    retrievePatients(); // استدعاء استرجاع البيانات في initState
+  }
+
+  Future<void> showLoadingDialog() async {
+    setState(() {
+      isLoading = true;
+    });
+  }
+
+  void hideLoadingDialog() {
+    setState(() {
+      isLoading = false;
+    });
+  }
+
+  Future<void> retrievePatients() async {
+    await showLoadingDialog();
+    try {
+      CollectionReference patientsRef = FirebaseFirestore.instance.collection('docPatient5');
+      QuerySnapshot querySnapshot = await patientsRef.get();
+      setState(() {
+        patients = querySnapshot.docs.map((doc) {
+          return {
+            'id': doc.id,
+            'name': doc['name'] ?? '',
+            'status': doc['status'] ?? '',
+            'roomNumber': doc['roomNumber'] ?? '',
+            'age': doc['age'] ?? '',
+            'medicamentName': doc['medicamentName'] ?? '',
+            'numberOfDoses': doc['numberOfDoses'] ?? '',
+            'timeFirstDose': doc['timeFirstDose'] ?? '',
+            'timeSecondDose': doc['timeSecondDose'] ?? '',
+            'timeThirdDose': doc['timeThirdDose'] ?? '',
+          };
+        }).toList();
+      });
+      print('Patients retrieved successfully');
+    } catch (e) {
+      print('Failed to retrieve patients: $e');
+    } finally {
+      hideLoadingDialog();
+    }
+  }
+
+  Future<dynamic> addNewPatient(
+      String name,
+      String status,
+      String roomNumber,
+      String age,
+      String medicamentName,
+      String numberOfDoses,
+      String timeFirstDose,
+      String timeSecondDose,
+      String timeThirdDose,
+      ) async {
+    try {
+      CollectionReference patientsRef = FirebaseFirestore.instance.collection('docPatient5');
+      DocumentReference newPatient = await patientsRef.add({
+        'name': name,
+        'status': status,
+        'roomNumber': roomNumber,
+        'age': age,
+        'medicamentName': medicamentName,
+        'numberOfDoses': numberOfDoses,
+        'timeFirstDose': timeFirstDose,
+        'timeSecondDose': timeSecondDose,
+        'timeThirdDose': timeThirdDose,
+      });
+      setState(() {
+        patients.add({
+          'id': newPatient.id,
+          'name': name,
+          'status': status,
+          'roomNumber': roomNumber,
+          'age': age,
+          'medicamentName': medicamentName,
+          'numberOfDoses': numberOfDoses,
+          'timeFirstDose': timeFirstDose,
+          'timeSecondDose': timeSecondDose,
+          'timeThirdDose': timeThirdDose,
+        });
+      });
+      print('تم إضافة المريض بنجاح');
+    } catch (e) {
+      print('فشل في إضافة المريض: $e');
+    }
+  }
+
+  Future<void> deletePatient(String id, int index) async {
+    try {
+      CollectionReference patientsRef = FirebaseFirestore.instance.collection('docPatient5');
+      await patientsRef.doc(id).delete();
+      setState(() {
+        patients.removeAt(index);
+      });
+      print('Patient deleted successfully');
+    } catch (e) {
+      print('Failed to delete patient: $e');
+    }
+  }
+
+  Future<void> updatePatient(int index) async {
+    try {
+      String currentName = patients[index]['name'] ?? '';
+      String currentStatus = patients[index]['status'] ?? '';
+      String currentRoomNumber = patients[index]['roomNumber'] ?? '';
+      String currentAge = patients[index]['age'] ?? '';
+      String currentMedicamentName = patients[index]['medicamentName'] ?? '';
+      String currentNumberOfDoses = patients[index]['numberOfDoses'] ?? '';
+      String currentTimeFirstDose = patients[index]['timeFirstDose'] ?? '';
+      String currentTimeSecondDose = patients[index]['timeSecondDose'] ?? '';
+      String currentTimeThirdDose = patients[index]['timeThirdDose'] ?? '';
+      String currentId = patients[index]['id'];
+
+      // Controllers for text fields
+      TextEditingController _nameController = TextEditingController(text: currentName);
+      TextEditingController _statusController = TextEditingController(text: currentStatus);
+      TextEditingController _roomNumberController = TextEditingController(text: currentRoomNumber);
+      TextEditingController _ageController = TextEditingController(text: currentAge);
+      TextEditingController _medicamentNameController = TextEditingController(text: currentMedicamentName);
+      TextEditingController _numberOfDosesController = TextEditingController(text: currentNumberOfDoses);
+      TextEditingController _timeOfFirstDoseController = TextEditingController(text: currentTimeFirstDose);
+      TextEditingController _timeOfSecondDoseController = TextEditingController(text: currentTimeSecondDose);
+      TextEditingController _timeOfThirdDoseController = TextEditingController(text: currentTimeThirdDose);
+
+      // Show update dialog
+      bool updateConfirmed = await showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return StatefulBuilder(
+            builder: (context, setState) {
+              return AlertDialog(
+                title: Text('Update Patient'),
+                content: SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TextField(
+                        controller: _nameController,
+                        decoration: InputDecoration(labelText: 'Name'),
+                      ),
+                      SizedBox(height: 10),
+                      TextField(
+                        controller: _statusController,
+                        decoration: InputDecoration(labelText: 'Status'),
+                      ),
+                      SizedBox(height: 10),
+                      TextField(
+                        controller: _roomNumberController,
+                        decoration: InputDecoration(labelText: 'Room number'),
+                      ),
+                      SizedBox(height: 10),
+                      TextField(
+                        controller: _ageController,
+                        decoration: InputDecoration(labelText: 'Age'),
+                      ),
+                      SizedBox(height: 10),
+                      TextField(
+                        controller: _medicamentNameController,
+                        decoration: InputDecoration(labelText: 'Medicament name'),
+                      ),
+                      SizedBox(height: 10),
+                      TextField(
+                        controller: _numberOfDosesController,
+                        decoration: InputDecoration(labelText: 'Number of doses'),
+                      ),
+                      SizedBox(height: 10),
+                      TextField(
+                        controller: _timeOfFirstDoseController,
+                        decoration: InputDecoration(labelText: 'Time of first dose'),
+                      ),
+                      SizedBox(height: 10),
+                      TextField(
+                        controller: _timeOfSecondDoseController,
+                        decoration: InputDecoration(labelText: 'Time of second dose'),
+                      ),
+                      SizedBox(height: 10),
+                      TextField(
+                        controller: _timeOfThirdDoseController,
+                        decoration: InputDecoration(labelText: 'Time of third dose'),
+                      ),
+                    ],
+                  ),
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop(false); // Cancel update
+                    },
+                    child: Text('Cancel'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () async {
+                      String updatedName = _nameController.text.trim();
+                      String updatedStatus = _statusController.text.trim();
+                      String updatedRoomNumber = _roomNumberController.text.trim();
+                      String updatedAge = _ageController.text.trim();
+                      String updatedMedicamentName = _medicamentNameController.text.trim();
+                      String updatedNumberOfDoses = _numberOfDosesController.text.trim();
+                      String updatedTimeOfFirstDose = _timeOfFirstDoseController.text.trim();
+                      String updatedTimeOfSecondDose = _timeOfSecondDoseController.text.trim();
+                      String updatedTimeOfThirdDose = _timeOfThirdDoseController.text.trim();
+
+                      if (updatedName.isNotEmpty &&
+                          updatedStatus.isNotEmpty &&
+                          updatedRoomNumber.isNotEmpty &&
+                          updatedAge.isNotEmpty &&
+                          updatedMedicamentName.isNotEmpty &&
+                          updatedNumberOfDoses.isNotEmpty &&
+                          updatedTimeOfFirstDose.isNotEmpty &&
+                          updatedTimeOfSecondDose.isNotEmpty &&
+                          updatedTimeOfThirdDose.isNotEmpty) {
+                        // Update patient data in Firestore
+                        await updatePatientData(
+                          currentId,
+                          updatedName,
+                          updatedStatus,
+                          updatedRoomNumber,
+                          updatedAge,
+                          updatedMedicamentName,
+                          updatedNumberOfDoses,
+                          updatedTimeOfFirstDose,
+                          updatedTimeOfSecondDose,
+                          updatedTimeOfThirdDose,
+                        );
+
+                        // Update local patient data
+                        setState(() {
+                          patients[index] = {
+                            'id': currentId,
+                            'name': updatedName,
+                            'status': updatedStatus,
+                            'roomNumber': updatedRoomNumber,
+                            'age': updatedAge,
+                            'medicamentName': updatedMedicamentName,
+                            'numberOfDoses': updatedNumberOfDoses,
+                            'timeFirstDose': updatedTimeOfFirstDose,
+                            'timeSecondDose': updatedTimeOfSecondDose,
+                            'timeThirdDose': updatedTimeOfThirdDose,
+                          };
+                        });
+
+                        Navigator.of(context).pop(true); // Confirm update
+                      } else {
+                        // Handle empty fields if needed
+                      }
+                    },
+                    child: Text('Update'),
+                  ),
+                ],
+              );
+            },
+          );
+        },
+      );
+
+      if (updateConfirmed == true) {
+        print('Patient updated successfully');
+      } else {
+        print('Patient update cancelled');
+      }
+    } catch (e) {
+      print('Failed to update patient: $e');
+    }
+  }
+
+  Future<void> updatePatientData(
+      String id,
+      String name,
+      String status,
+      String roomNumber,
+      String age,
+      String medicamentName,
+      String numberOfDoses,
+      String timeFirstDose,
+      String timeSecondDose,
+      String timeThirdDose,
+      ) async {
+    try {
+      CollectionReference patientsRef = FirebaseFirestore.instance.collection('docPatient5');
+      await patientsRef.doc(id).update({
+        'name': name,
+        'status': status,
+        'roomNumber': roomNumber,
+        'age': age,
+        'medicamentName': medicamentName,
+        'numberOfDoses': numberOfDoses,
+        'timeFirstDose': timeFirstDose,
+        'timeSecondDose': timeSecondDose,
+        'timeThirdDose': timeThirdDose,
+      });
+      print('Patient data updated in Firestore');
+    } catch (e) {
+      print('Failed to update patient data: $e');
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SafeArea(
+        child: Column(
+          children: [
+            Container(
+              color: Colors.grey[200],
+              padding: EdgeInsets.all(8),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextWidget(
+                    title: "المرضى",
+                    titleColor: Colors.black,
+                    titleSize: 30,
+                    titleFontWeight: FontWeight.bold,
+                  ),
+                ],
+              ),
+            ),
+            isLoading // Show CircularProgressIndicator if loading
+                ? Center(child: CircularProgressIndicator())
+                : Expanded(
+              child: GridView.builder(
+                itemCount: patients.length,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 8,
+                  crossAxisSpacing: 8,
+                ),
+                itemBuilder: (BuildContext context, int index) {
+                  final patient = patients[index];
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => DetailPatient(
+                            name: patient['name'] ?? '',
+                            status: patient['status'] ?? '',
+                            roomNumber: patient['roomNumber'] ?? '',
+                            age: patient['age'] ?? '',
+                            medicamentName: patient['medicamentName'] ?? '',
+                            numberOfDoses: patient['numberOfDoses'] ?? '',
+                            timeOfFirstDose: patient['timeFirstDose'] ?? '',
+                            timeOfSecondDose: patient['timeSecondDose'] ?? '',
+                            timeOfThirdDose: patient['timeThirdDose'] ?? '',
+                            image: imagePatients[index % imagePatients.length],
+                          ),
+                        ),
+                      );
+                    },
+                    child: Card(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Image.asset(
+                            imagePatients[index % imagePatients.length],
+                            fit: BoxFit.cover,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Name: ${patient['name']}',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18,
+                                  ),
+                                ),
+                                SizedBox(height: 4),
+                                Text('Status: ${patient['status']}'),
+                                SizedBox(height: 4),
+                                Text('Room: ${patient['roomNumber']}'),
+                              ],
+                            ),
+                          ),
+                          Spacer(),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                IconButton(
+                                  icon: Icon(Icons.edit),
+                                  onPressed: () => updatePatient(index),
+                                ),
+                                IconButton(
+                                  icon: Icon(Icons.delete),
+                                  onPressed: () => deletePatient(patient['id'], index),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                addNewPatient(
+                  'مريض جديد',
+                  'حالة جديدة',
+                  'رقم غرفة جديد',
+                  'عمر جديد',
+                  'اسم دواء جديد',
+                  'عدد جرعات جديد',
+                  'وقت الجرعة الأولى',
+                  'وقت الجرعة الثانية',
+                  'وقت الجرعة الثالثة',
+                );
+              },
+              child: Text('إضافة مريض جديد'),
+            ),
+          ],
+        ),
+      ),
+      bottomNavigationBar: ButtonNavBar(),
+    );
+  }
+}

@@ -44,7 +44,7 @@ class _AllChatUserState extends State<AllChatUser> {
                         children: [
                           CircleAvatar(
                             radius: 25, // يمكنك تعديل الحجم هنا
-                            backgroundImage: AssetImage( "assets/images/d1.png",), // ضع مسار الصورة هنا
+                            backgroundImage: AssetImage( "assets/images/n3.jpg",), // ضع مسار الصورة هنا
                           ),
                           SizedBox(width: 7,),
                           Text("DR Naglaa Saeed",style: TextStyle(fontSize: 22,color: Colors.black,),),
@@ -149,7 +149,7 @@ class _AllChatUserState extends State<AllChatUser> {
                         children: [
                           CircleAvatar(
                             radius: 25, // يمكنك تعديل الحجم هنا
-                            backgroundImage: AssetImage( "assets/images/d2.png"), // ضع مسار الصورة هنا
+                            backgroundImage: AssetImage( "assets/images/n1.jpg"), // ضع مسار الصورة هنا
                           ),
                           SizedBox(width: 7,),
                           Text("DR Lila Ahmed",style: TextStyle(fontSize: 22,color: Colors.black),),
@@ -175,7 +175,7 @@ class _AllChatUserState extends State<AllChatUser> {
                         children: [
                           CircleAvatar(
                             radius: 25, // يمكنك تعديل الحجم هنا
-                            backgroundImage: AssetImage("assets/images/d3.png",), // ضع مسار الصورة هنا
+                            backgroundImage: AssetImage("assets/images/n3.jpg",), // ضع مسار الصورة هنا
                           ),
                           SizedBox(width: 7,),
                           Text("DR Gana Ahmed",style: TextStyle(fontSize: 22,color: Colors.black),),

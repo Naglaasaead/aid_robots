@@ -715,20 +715,7 @@ void initSharedPref () async{
 */
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+import 'package:aid_robot/features/auth_feature/presentation/screens/patients.dart';
 import 'package:aid_robot/features/auth_feature/presentation/screens/sign_up.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -739,23 +726,26 @@ import '../../../../app/Cubit/cubit_cubit.dart';
 import '../../../../app/widgets/custom_button.dart';
 import '../../../../app/widgets/custom_text_feildEmail.dart';
 import '../../../../app/widgets/text_widget.dart';
+import 'allChat.dart';
+import 'appointment.dart';
 import 'forget_password.dart';
 import 'home_patient.dart';
 
 
 
-
-
-
 class LoginScreens extends StatefulWidget {
+  String ? selectedValue;
+  LoginScreens(this.selectedValue);
+
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _LoginScreenState createState() => _LoginScreenState( );
 }
 
 class _LoginScreenState extends State<LoginScreens> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+
   bool _obscureText = true;
 
   @override
@@ -782,7 +772,7 @@ class _LoginScreenState extends State<LoginScreens> {
           } else if (state is ErrorState) {
             print("Login Failed: ${state.error}");
             Fluttertoast.showToast(
-              msg: "An error occurred during registration",
+              msg: "An error occurred during login",
               toastLength: Toast.LENGTH_SHORT,
               gravity: ToastGravity.BOTTOM,
               timeInSecForIosWeb: 1,
@@ -902,7 +892,20 @@ class _LoginScreenState extends State<LoginScreens> {
                                         password: passwordController.text,
                                       );
 
+                                      if(widget.selectedValue=='patient'){
+                                        Navigator.push(context, MaterialPageRoute(builder:(context) =>AllChatUser(),));
+                                      }
+                                      else if (widget.selectedValue=='doctor'){
+                                        Navigator.push(context, MaterialPageRoute(builder:(context) =>Patient(),));
+                                      }
+                                      else if (widget.selectedValue=='nurse'){
+                                        Navigator.push(context, MaterialPageRoute(builder:(context) =>Appointment(),));
+                                      }
+                                      else{
+                                        Navigator.push(context, MaterialPageRoute(builder:(context) =>HomePatient()));
+                                      }
                                     }
+
 
                                   },
                                 ),
@@ -931,7 +934,7 @@ class _LoginScreenState extends State<LoginScreens> {
                                     onTap: () {
                                       Navigator.push(
                                         context,
-                                        MaterialPageRoute(builder: (context) => SignUpScreen()),
+                                        MaterialPageRoute(builder: (context) => SignUpScreen(selectedValue:widget.selectedValue ,)),
                                       );
                                     },
                                   ),

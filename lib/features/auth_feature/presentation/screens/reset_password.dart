@@ -7,7 +7,8 @@ import '../../../../app/widgets/custom_text_feildEmail.dart';
 import 'login.dart';
 
 class ResetPassword extends StatefulWidget {
-  const ResetPassword({super.key});
+  String ? selectedValue;
+   ResetPassword({this.selectedValue});
 
   @override
   State<ResetPassword> createState() => _ResetPasswordState();
@@ -76,7 +77,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                 onPressed: (context) {
                   // Execute validation logic here
 
-                    Navigator.push(context,  MaterialPageRoute(builder: (context) => LoginScreens()));
+                    Navigator.push(context,  MaterialPageRoute(builder: (context) => LoginScreens(widget.selectedValue)));
 
                 },
               ),

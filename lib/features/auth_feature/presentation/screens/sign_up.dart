@@ -251,7 +251,9 @@ import '../../../../app/widgets/text_widget.dart';
 import 'login.dart';
 
 class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({Key? key});
+
+   String ? selectedValue;
+   SignUpScreen({required this.selectedValue});
 
   @override
   State<SignUpScreen> createState() => _SignUpScreenState();
@@ -290,7 +292,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => LoginScreens(),
+            builder: (context) => LoginScreens(widget.selectedValue),
           ),
         );
       } else {
@@ -498,7 +500,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) => LoginScreens(),
+                                          builder: (context) => LoginScreens(widget.selectedValue),
                                         ),
                                       );
                                     }
