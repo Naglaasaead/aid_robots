@@ -534,7 +534,7 @@ class _BoardingScreenState extends State<BoardingScreen> {
     const int pageCount = 3; // تعريف قيمة pageCount
     return Scaffold(
       appBar: AppBar(
-        title: Text(''.tr()),
+        title: Text('Choose Lang'.tr(),),
         actions: [
           PopupMenuButton<String>(
             icon: Icon(Icons.language),

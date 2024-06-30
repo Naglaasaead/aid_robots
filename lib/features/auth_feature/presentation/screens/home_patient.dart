@@ -74,7 +74,9 @@ class _HomePatientState extends State<HomePatient> {
                     color: Color(0xFFF3F2E9),
                 ),
                 child: Padding(
+
                   padding: const EdgeInsets.all(10.0),
+
                   child: Row(
                     children: [
                       TextWidget( title: 'Search'.tr(),titleColor: Colors.grey,),
