@@ -1,4 +1,5 @@
 import 'package:aid_robot/app/widgets/text_widget.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import 'button_nav_bar.dart';
@@ -52,7 +53,7 @@ class _HomePatientState extends State<HomePatient> {
           )],
           title: Padding(
             padding: const EdgeInsets.only(top: 20,),
-            child: Text("Naglaa",style: TextStyle(fontSize: 22,fontWeight: FontWeight.bold,color: Colors.black),),
+            child: Text("Naglaa".tr(),style: TextStyle(fontSize: 22,fontWeight: FontWeight.bold,color: Colors.black),),
           ),
         leading: Padding(
           padding: const EdgeInsets.only(top: 20,left: 20),
@@ -76,7 +77,7 @@ class _HomePatientState extends State<HomePatient> {
                   padding: const EdgeInsets.all(10.0),
                   child: Row(
                     children: [
-                      TextWidget( title: 'Search Medicine & Doctors',titleColor: Colors.grey,),
+                      TextWidget( title: 'Search'.tr(),titleColor: Colors.grey,),
                       Spacer(),
                       Icon(Icons.search,color: Colors.grey,)
                     ],
@@ -99,19 +100,19 @@ class _HomePatientState extends State<HomePatient> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        TextWidget(title: 'Reminder', titleColor: Colors.black, titleFontWeight: FontWeight.bold),
+                        TextWidget(title: 'Reminder'.tr(), titleColor: Colors.black, titleFontWeight: FontWeight.bold),
                       ],
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        TextWidget(title: 'Check active appointments and get ', titleColor: Colors.black),
+                        TextWidget(title: 'CheckActive'.tr(), titleColor: Colors.black),
                       ],
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        TextWidget(title: 'ready for the meeting.', titleColor: Colors.black),
+                        TextWidget(title: 'readyMeeting.'.tr(), titleColor: Colors.black),
                       ],
                     ),
                     Row(
@@ -120,12 +121,12 @@ class _HomePatientState extends State<HomePatient> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            TextWidget(title: 'No appointments', titleColor: Colors.black),
-                            TextWidget(title: 'in 3 days.', titleColor: Colors.black),
+                            TextWidget(title: 'NoAppointment'.tr(), titleColor: Colors.black),
+                            TextWidget(title: 'day'.tr(), titleColor: Colors.black),
                           ],
                         ),
                         SizedBox(width: 50,),
-                        ElevatedButton(onPressed: (){}, child: TextWidget(title: "CHEACK DATE",titleColor: Colors.white,),style:
+                        ElevatedButton(onPressed: (){}, child: TextWidget(title: "CHEACKDATE".tr(),titleColor: Colors.white,),style:
                           ElevatedButton.styleFrom(backgroundColor: Colors.blueAccent),)
                         /*CustomTextButton(title: "CHEAK DATE",
 
@@ -163,7 +164,7 @@ class _HomePatientState extends State<HomePatient> {
               Row(
 
                 children: [
-                  TextWidget(title: "Popular Medicines",titleColor: Colors.black,
+                  TextWidget(title: "PopularMedicines".tr(),titleColor: Colors.black,
                       titleSize: 21,titleFontWeight: FontWeight.bold,),
                   Spacer(),
                    /*     ListTileWidget(
@@ -180,7 +181,7 @@ class _HomePatientState extends State<HomePatient> {
           image: true,
           //imageUrl: 'assets/images/view.png',
         ),*/
-                  InkWell(child: TextWidget(title: "SEE ALL",titleColor: Colors.black,
+                  InkWell(child: TextWidget(title: "SEEALL".tr(),titleColor: Colors.black,
                     titleSize: 15,titleFontWeight: FontWeight.bold,),
                   onTap: (){},),
                   SizedBox(width: 4,),

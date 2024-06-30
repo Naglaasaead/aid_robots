@@ -717,6 +717,7 @@ void initSharedPref () async{
 
 import 'package:aid_robot/features/auth_feature/presentation/screens/patients.dart';
 import 'package:aid_robot/features/auth_feature/presentation/screens/sign_up.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -755,9 +756,9 @@ class _LoginScreenState extends State<LoginScreens> {
       child: BlocConsumer<LoginCubit, LoginStates>(
         listener: (context, state) {
           if (state is SuccessState) {
-            print("Login Successful!");
+            print("successfully".tr());
             Fluttertoast.showToast(
-              msg: "successfully registered",
+              msg: "successfully".tr(),
               toastLength: Toast.LENGTH_SHORT,
               gravity: ToastGravity.BOTTOM,
               timeInSecForIosWeb: 1,
@@ -770,9 +771,9 @@ class _LoginScreenState extends State<LoginScreens> {
               MaterialPageRoute(builder: (context) => HomePatient()),
             );
           } else if (state is ErrorState) {
-            print("Login Failed: ${state.error}");
+            print("Login Failed: ${state.error}".tr());
             Fluttertoast.showToast(
-              msg: "An error occurred during login",
+              msg: "occurred".tr(),
               toastLength: Toast.LENGTH_SHORT,
               gravity: ToastGravity.BOTTOM,
               timeInSecForIosWeb: 1,
@@ -796,7 +797,7 @@ class _LoginScreenState extends State<LoginScreens> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         TextWidget(
-                          title: "Log In",
+                          title: "LogIn".tr(),
                           titleColor: Colors.black,
                           titleFontWeight: FontWeight.bold,
                           titleSize: 25,
@@ -812,13 +813,13 @@ class _LoginScreenState extends State<LoginScreens> {
                                 //  emailController.text = value;
                                 },
                                 controller: emailController,
-                                text: 'Email',
+                                text: 'Email'.tr(),
                                 prefixIcon: Icon(Icons.email_outlined),
                                 keyboardType: TextInputType.emailAddress,
                                 obscureText: false,
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
-                                    return 'Please enter an email';
+                                    return 'ReEnterEmail'.tr();
                                   }
                                   return null;
                                 },
@@ -830,7 +831,7 @@ class _LoginScreenState extends State<LoginScreens> {
                                //   passwordController.text = value;
 
                                 },
-                                text: 'Password',
+                                text: 'Password'.tr(),
                                  controller: passwordController,
                                 obscureText: _obscureText,
                                 prefixIcon: Icon(Icons.lock),
@@ -844,10 +845,10 @@ class _LoginScreenState extends State<LoginScreens> {
                                 ),
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
-                                    return 'Please enter a Password';
+                                    return 'PleasePassword'.tr();
                                   }
                                   if (value.length < 8) {
-                                    return 'Password must be at least 8 characters long';
+                                    return 'PasswordCharacters'.tr();
                                   }
                                   return null;
                                 },
@@ -863,7 +864,7 @@ class _LoginScreenState extends State<LoginScreens> {
                                 children: [
                                   InkWell(
                                     child: TextWidget(
-                                      title: "Forget Password?",
+                                      title: "ForgotPassword".tr(),
                                       titleColor: Colors.blueAccent,
                                     ),
                                     onTap: () {
@@ -883,7 +884,7 @@ class _LoginScreenState extends State<LoginScreens> {
 
                               else
                                 CustomButton(
-                                  text: "Login",
+                                  text: "Login".tr(),
                                   color: Colors.blue,
                                   onPressed: (v) {
                                     if (formKey.currentState!.validate()) {
@@ -916,7 +917,7 @@ class _LoginScreenState extends State<LoginScreens> {
                                   Container(width: 140, height: 1, color: Colors.black),
                                   Padding(
                                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                                    child: Text('OR', style: TextStyle(fontSize: 18)),
+                                    child: Text('OR'.tr(), style: TextStyle(fontSize: 18)),
                                   ),
                                   Container(width: 140, height: 1, color: Colors.black),
                                 ],
@@ -925,10 +926,10 @@ class _LoginScreenState extends State<LoginScreens> {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  TextWidget(title: "Don’t have an account? "),
+                                  TextWidget(title: "Don’tAccount? ".tr()),
                                   InkWell(
                                     child: TextWidget(
-                                      title: "Sign Up",
+                                      title: "SignUp".tr(),
                                       titleColor: Colors.blueAccent,
                                     ),
                                     onTap: () {

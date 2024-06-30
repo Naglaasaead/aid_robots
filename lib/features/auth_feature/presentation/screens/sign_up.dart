@@ -238,6 +238,7 @@ import 'dart:convert';
 
 import 'package:aid_robot/app/Cubit/cubit_cubit.dart';
 import 'package:aid_robot/features/auth_feature/presentation/presentation_logic_holder/auth_cubit.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -278,10 +279,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
   void registerUser() async {
     if (emailController.text.isNotEmpty && passwordController.text.isNotEmpty) {
       var reqBody = {
-        "name": nameController.text,
-        "email": emailController.text,
-        "password": passwordController.text,
-        "phone": phoneController.text,
+        "Name".tr(): nameController.text,
+        "Email".tr(): emailController.text,
+        "Password".tr(): passwordController.text,
+        "PhoneNumber".tr(): phoneController.text,
       };
 
       var response = await http.post(Uri.parse(registration), body: jsonEncode(reqBody));
@@ -343,7 +344,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         TextWidget(
-                          title: "Sign Up",
+                          title: "SignUp".tr(),
                           titleColor: Colors.black,
                           titleFontWeight: FontWeight.bold,
                           titleSize: 25,
@@ -355,7 +356,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             children: [
                               SizedBox(height: 7),
                               CustomTextField(
-                                text: 'Name',
+                                text: 'Name'.tr(),
                                 controller: nameController,
                                 onChanged: (value) {
                                   nameController.text = value;
@@ -364,7 +365,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 keyboardType: TextInputType.name,
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
-                                    return 'Please enter a name';
+                                    return 'EnterName'.tr();
                                   }
                                   return null;
                                 },
@@ -376,13 +377,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 onChanged: (value) {
                                   emailController.text = value;
                                 },
-                                text: 'Email',
+                                text: 'Email'.tr(),
                                 prefixIcon: Icon(Icons.person),
                                 keyboardType: TextInputType.emailAddress,
                                 obscureText: false,
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
-                                    return 'Please enter an email';
+                                    return 'ReEnterEmail'.tr();
                                   }
                                   return null;
                                 },
@@ -394,7 +395,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 onChanged: (value) {
                                   passwordController.text = value;
                                 },
-                                text: 'Password',
+                                text: 'Password'.tr(),
                                 obscureText: _obscureText,
                                 prefixIcon: Icon(Icons.lock),
                                 suffixIcon: IconButton(
@@ -407,10 +408,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 ),
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
-                                    return 'Please enter a Password';
+                                    return 'PleasePassword'.tr();
                                   }
                                   if (value.length < 8) {
-                                    return 'Password must be at least 8 characters long';
+                                    return 'passChar'.tr();
                                   }
                                   return null;
                                 },
@@ -426,16 +427,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 onChanged: (value) {
                                   phoneController.text = value;
                                 },
-                                text: 'Phone Number',
+                                text: 'PhoneNumber'.tr(),
                                 prefixIcon: Icon(Icons.phone),
                                 keyboardType: TextInputType.phone,
                                 obscureText: false,
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
-                                    return 'Please enter a phone number';
+                                    return 'EnterPhoneNumber'.tr();
                                   }
                                   if (!phoneRegex.hasMatch(value)) {
-                                    return 'Please enter a valid phone number';
+                                    return 'ValiedPhone'.tr();
                                   }
                                   return null;
                                 },
@@ -446,12 +447,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   TextWidget(
-                                    title: "By signing up, you agree to our",
+                                    title: "SayUp".tr(),
                                     titleColor: Colors.black,
                                     titleSize: 14,
                                   ),
                                   TextWidget(
-                                    title: "Terms & Conditions",
+                                    title: "TermCondition".tr(),
                                     titleSize: 14,
                                     titleColor: Colors.blueAccent,
                                   )
@@ -461,12 +462,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   TextWidget(
-                                    title: "and ",
+                                    title: "and".tr(),
                                     titleColor: Colors.black,
                                     titleSize: 14,
                                   ),
                                   TextWidget(
-                                    title: "Privacy Policy ",
+                                    title: "PrivacyPolicy".tr(),
                                     titleColor: Colors.blueAccent,
                                     titleSize: 14,
                                   ),
@@ -478,7 +479,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
                               else
                                 CustomButton(
-                                  text: "Continue",
+                                  text: "Continue".tr(),
                                   color: Colors.blue,
                                   onPressed: (v) {
                                     if (formKey.currentState!.validate()) {
@@ -489,7 +490,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         phone: phoneController.text,
                                       );
                                       Fluttertoast.showToast(
-                                        msg: "successfully registered",
+                                        msg: "successfullyRegistered".tr(),
                                         toastLength: Toast.LENGTH_SHORT,
                                         gravity: ToastGravity.BOTTOM,
                                         timeInSecForIosWeb: 1,
@@ -506,7 +507,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     }
                                     else {
                                       Fluttertoast.showToast(
-                                        msg: "Something went wrong, try again",
+                                        msg: "tryAgain".tr(),
                                         toastLength: Toast.LENGTH_SHORT,
                                         gravity: ToastGravity.BOTTOM,
                                         timeInSecForIosWeb: 1,
@@ -528,7 +529,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                                    child: Text('OR', style: TextStyle(fontSize: 18)),
+                                    child: Text('OR'.tr(), style: TextStyle(fontSize: 18)),
                                   ),
                                   Container(
                                     width: 140,
@@ -541,8 +542,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  TextWidget(title: "Joined us before?  "),
-                                  TextWidget(title: "Sign In", titleColor: Colors.blueAccent),
+                                  TextWidget(title: "JoinedBefore".tr()),
+                                  TextWidget(title: "SignIn".tr(), titleColor: Colors.blueAccent),
                                 ],
                               )
                             ],

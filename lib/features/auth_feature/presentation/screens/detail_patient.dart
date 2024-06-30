@@ -1389,7 +1389,10 @@ class _DetailPatientState extends State<DetailPatient> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Patient Details',style: TextStyle(color: Colors.black,fontSize: 17,fontWeight: FontWeight.bold),),
+        title: Text(
+          'Patient Details',
+          style: TextStyle(color: Colors.black, fontSize: 17, fontWeight: FontWeight.bold),
+        ),
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16),
@@ -1397,8 +1400,8 @@ class _DetailPatientState extends State<DetailPatient> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              width: double.infinity, // عرض الصورة
-              height: 235, // ارتفاع الصورة
+              width: double.infinity,
+              height: 235,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(
                   bottomRight: Radius.circular(15),
@@ -1408,64 +1411,64 @@ class _DetailPatientState extends State<DetailPatient> {
                 ),
                 image: DecorationImage(
                   image: AssetImage(_currentImage),
-                  fit: BoxFit.cover, // لضبط الصورة داخل الحاوية
+                  fit: BoxFit.cover,
                 ),
               ),
             ),
             SizedBox(height: 20),
             TextWidget(
-              title: 'Name  : $_currentName',
+              title: 'Name: $_currentName',
               titleSize: 20,
               titleFontWeight: FontWeight.bold,
-              titleColor: Colors.red,
+              titleColor: Colors.black, // Changed to black
             ),
             TextWidget(
-              title: 'Age : $_currentAge',
+              title: 'Age: $_currentAge',
               titleSize: 20,
               titleFontWeight: FontWeight.bold,
-              titleColor: Colors.red,
+              titleColor: Colors.black, // Changed to black
             ),
             TextWidget(
-              title: 'Status  : $_currentStatus',
+              title: 'Status: $_currentStatus',
               titleSize: 20,
               titleFontWeight: FontWeight.bold,
-              titleColor: Colors.red,
+              titleColor: Colors.black, // Changed to black
             ),
             TextWidget(
-              title: 'Room Number : $_currentRoomNumber',
+              title: 'Room Number: $_currentRoomNumber',
               titleSize: 20,
               titleFontWeight: FontWeight.bold,
-              titleColor: Colors.red,
+              titleColor: Colors.black, // Changed to black
             ),
             TextWidget(
-              title: 'Medicament Name : $_currentMedicamentName',
+              title: 'Medicament Name: $_currentMedicamentName',
               titleSize: 20,
               titleFontWeight: FontWeight.bold,
-              titleColor: Colors.red,
+              titleColor: Colors.black, // Changed to black
             ),
             TextWidget(
-              title: 'Number of Doses : $_currentNumberOfDoses',
+              title: 'Number of Doses: $_currentNumberOfDoses',
               titleSize: 20,
               titleFontWeight: FontWeight.bold,
-              titleColor: Colors.red,
+              titleColor: Colors.black, // Changed to black
             ),
             TextWidget(
-              title: 'Time of First Dose  : $_currentTimeOfFirstDose',
+              title: 'Time of First Dose: $_currentTimeOfFirstDose',
               titleSize: 20,
               titleFontWeight: FontWeight.bold,
-              titleColor: Colors.red,
+              titleColor: Colors.black, // Changed to black
             ),
             TextWidget(
-              title: 'Time of Second Dose : $_currentTimeOfSecondDose',
+              title: 'Time of Second Dose: $_currentTimeOfSecondDose',
               titleSize: 20,
               titleFontWeight: FontWeight.bold,
-              titleColor: Colors.red,
+              titleColor: Colors.black, // Changed to black
             ),
             TextWidget(
-                title: 'Time of Third Dose  : $_currentTimeOfThirdDose',
+              title: 'Time of Third Dose: $_currentTimeOfThirdDose',
               titleSize: 20,
               titleFontWeight: FontWeight.bold,
-              titleColor: Colors.red,
+              titleColor: Colors.black, // Changed to black
             ),
           ],
         ),
@@ -1473,5 +1476,6 @@ class _DetailPatientState extends State<DetailPatient> {
       bottomNavigationBar: ButtonNavBar(initialIndex: 2),
     );
   }
+
 }
 

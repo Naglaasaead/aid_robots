@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -107,17 +105,70 @@ class _PatientState extends State<Patient> {
   Future<void> deletePatient(String id, int index) async {
     try {
       CollectionReference patientsRef = FirebaseFirestore.instance.collection('patients');
-      await patientsRef.doc(id).delete();
-      setState(() {
-        patients.removeAt(index);
-      });
-      print('Patient deleted successfully');
+      // Show confirmation dialog
+      bool confirmDelete = await showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Confirm Deletion'),
+            content: Text('Are you sure you want to delete this patient?'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(false); // Cancel delete
+                },
+                child: Text('No'),
+              ),
+              ElevatedButton(
+                onPressed: () async {
+                  Navigator.of(context).pop(true); // Confirm delete
+                },
+                child: Text('Yes'),
+              ),
+            ],
+          );
+        },
+      );
+
+      // If user confirms deletion, proceed
+      if (confirmDelete ?? false) {
+        await patientsRef.doc(id).delete();
+        setState(() {
+          patients.removeAt(index);
+        });
+        // Show delete success dialog
+        _showDeleteSuccessDialog();
+        print('Patient deleted successfully');
+      }
     } catch (e) {
       print('Failed to delete patient: $e');
     }
   }
 
-  Future<void> updatePatient(int index) async {
+
+  void _showDeleteSuccessDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Success'),
+          content: Text('Patient deleted successfully'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+
+
+  /* Future<void> updatePatient(int index) async {
     try {
       String currentName = patients[index]['name'] ?? '';
       String currentStatus = patients[index]['status'] ?? '';
@@ -256,6 +307,194 @@ class _PatientState extends State<Patient> {
                         });
 
                         Navigator.of(context).pop(true); // Confirm update
+                        _showUpdateSuccessDialog(); // Show success dialog
+                      }
+                    },
+                    child: Text('Update'),
+                  ),
+                ],
+              );
+            },
+          );
+        },
+      );
+
+      if (updateConfirmed ?? false) {
+        print('Patient updated successfully');
+      } else {
+        print('Patient update cancelled');
+      }
+    } catch (e) {
+      print('Failed to update patient: $e');
+    }
+  }*/
+  Future<void> updatePatient(int index) async {
+    try {
+      String currentName = patients[index]['name'] ?? '';
+      String currentStatus = patients[index]['status'] ?? '';
+      String currentRoomNumber = patients[index]['roomNumber'] ?? '';
+      String currentAge = patients[index]['age'] ?? '';
+      String currentMedicamentName = patients[index]['medicamentName'] ?? '';
+      String currentNumberOfDoses = patients[index]['numberOfDoses'] ?? '';
+      String currentTimeFirstDose = patients[index]['timeFirstDose'] ?? '';
+      String currentTimeSecondDose = patients[index]['timeSecondDose'] ?? '';
+      String currentTimeThirdDose = patients[index]['timeThirdDose'] ?? '';
+      String currentId = patients[index]['id'];
+
+      // Controllers for text fields (make these fields class-level variables)
+      TextEditingController _nameController = TextEditingController(text: currentName);
+      TextEditingController _statusController = TextEditingController(text: currentStatus);
+      TextEditingController _roomNumberController = TextEditingController(text: currentRoomNumber);
+      TextEditingController _ageController = TextEditingController(text: currentAge);
+      TextEditingController _medicamentNameController = TextEditingController(text: currentMedicamentName);
+      TextEditingController _numberOfDosesController = TextEditingController(text: currentNumberOfDoses);
+      TextEditingController _timeOfFirstDoseController = TextEditingController(text: currentTimeFirstDose);
+      TextEditingController _timeOfSecondDoseController = TextEditingController(text: currentTimeSecondDose);
+      TextEditingController _timeOfThirdDoseController = TextEditingController(text: currentTimeThirdDose);
+
+      // Show update confirmation dialog
+      bool updateConfirmed = await showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return StatefulBuilder(
+            builder: (context, setState) {
+              return AlertDialog(
+                title: Text('Update Patient'),
+                content: SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TextField(
+                        controller: _nameController,
+                        decoration: InputDecoration(labelText: 'Name'),
+                      ),
+                      SizedBox(height: 10),
+                      TextField(
+                        controller: _statusController,
+                        decoration: InputDecoration(labelText: 'Status'),
+                      ),
+                      SizedBox(height: 10),
+                      TextField(
+                        controller: _roomNumberController,
+                        decoration: InputDecoration(labelText: 'Room number'),
+                      ),
+                      SizedBox(height: 10),
+                      TextField(
+                        controller: _ageController,
+                        decoration: InputDecoration(labelText: 'Age'),
+                      ),
+                      SizedBox(height: 10),
+                      TextField(
+                        controller: _medicamentNameController,
+                        decoration: InputDecoration(labelText: 'Medicament name'),
+                      ),
+                      SizedBox(height: 10),
+                      TextField(
+                        controller: _numberOfDosesController,
+                        decoration: InputDecoration(labelText: 'Number of doses'),
+                      ),
+                      SizedBox(height: 10),
+                      TextField(
+                        controller: _timeOfFirstDoseController,
+                        decoration: InputDecoration(labelText: 'Time of first dose'),
+                      ),
+                      SizedBox(height: 10),
+                      TextField(
+                        controller: _timeOfSecondDoseController,
+                        decoration: InputDecoration(labelText: 'Time of second dose'),
+                      ),
+                      SizedBox(height: 10),
+                      TextField(
+                        controller: _timeOfThirdDoseController,
+                        decoration: InputDecoration(labelText: 'Time of third dose'),
+                      ),
+                    ],
+                  ),
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop(false); // Cancel update
+                    },
+                    child: Text('Cancel'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () async {
+                      String updatedName = _nameController.text.trim();
+                      String updatedStatus = _statusController.text.trim();
+                      String updatedRoomNumber = _roomNumberController.text.trim();
+                      String updatedAge = _ageController.text.trim();
+                      String updatedMedicamentName = _medicamentNameController.text.trim();
+                      String updatedNumberOfDoses = _numberOfDosesController.text.trim();
+                      String updatedTimeOfFirstDose = _timeOfFirstDoseController.text.trim();
+                      String updatedTimeOfSecondDose = _timeOfSecondDoseController.text.trim();
+                      String updatedTimeOfThirdDose = _timeOfThirdDoseController.text.trim();
+
+                      if (updatedName.isNotEmpty &&
+                          updatedStatus.isNotEmpty &&
+                          updatedRoomNumber.isNotEmpty &&
+                          updatedAge.isNotEmpty &&
+                          updatedMedicamentName.isNotEmpty &&
+                          updatedNumberOfDoses.isNotEmpty &&
+                          updatedTimeOfFirstDose.isNotEmpty &&
+                          updatedTimeOfSecondDose.isNotEmpty &&
+                          updatedTimeOfThirdDose.isNotEmpty) {
+                        // Show confirmation dialog
+                        bool confirmUpdate = await showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text('Confirm Update'),
+                              content: Text('Are you sure you want to update this patient?'),
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop(false); // Cancel update
+                                  },
+                                  child: Text('No'),
+                                ),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop(true); // Confirm update
+                                  },
+                                  child: Text('Yes'),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+
+                        if (confirmUpdate ?? false) {
+                          // Update patient data in Firestore
+                          await updatePatientData(
+                            currentId,
+                            updatedName,
+                            updatedStatus,
+                            updatedRoomNumber,
+                            updatedAge,
+                            updatedMedicamentName,
+                            updatedNumberOfDoses,
+                            updatedTimeOfFirstDose,
+                            updatedTimeOfSecondDose,
+                            updatedTimeOfThirdDose,
+                          );
+                          // Update local state
+                          setState(() {
+                            patients[index]['name'] = updatedName;
+                            patients[index]['status'] = updatedStatus;
+                            patients[index]['roomNumber'] = updatedRoomNumber;
+                            patients[index]['age'] = updatedAge;
+                            patients[index]['medicamentName'] = updatedMedicamentName;
+                            patients[index]['numberOfDoses'] = updatedNumberOfDoses;
+                            patients[index]['timeFirstDose'] = updatedTimeOfFirstDose;
+                            patients[index]['timeSecondDose'] = updatedTimeOfSecondDose;
+                            patients[index]['timeThirdDose'] = updatedTimeOfThirdDose;
+                          });
+
+                          Navigator.of(context).pop(true); // Confirm update
+                          _showUpdateSuccessDialog(); // Show success dialog
+                        }
                       }
                     },
                     child: Text('Update'),
@@ -276,6 +515,28 @@ class _PatientState extends State<Patient> {
       print('Failed to update patient: $e');
     }
   }
+
+  void _showUpdateSuccessDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Success'),
+          content: Text('Patient updated successfully'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+
 
   Future<void> updatePatientData(
       String id,
@@ -312,21 +573,45 @@ class _PatientState extends State<Patient> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Patients of Blood Pressure ',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 20),),
+        title: const Text('Patients of esoteric ',style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 20),),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           showDialog(
             context: context,
             builder: (BuildContext context) {
-              return AddPatientDialog(
-                onAddPatient: addNewPatient,
+              return AlertDialog(
+                title: Text('Confirm Add'),
+                content: Text('Are you sure you want to add this patient?'),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop(); // Close dialog
+                    },
+                    child: Text('No'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () async {
+                      Navigator.of(context).pop(); // Close dialog
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AddPatientDialog(
+                            onAddPatient: addNewPatient,
+                          );
+                        },
+                      );
+                    },
+                    child: Text('Yes'),
+                  ),
+                ],
               );
             },
           );
         },
-        child: const Icon(Icons.add),
+        child: Icon(Icons.add),
       ),
+
       bottomNavigationBar: const ButtonNavBar(),
       body: ListView.builder(
         itemCount: patients.length,
@@ -419,6 +704,26 @@ class _AddPatientDialogState extends State<AddPatientDialog> {
   TextEditingController _timeOfFirstDoseController = TextEditingController();
   TextEditingController _timeOfSecondDoseController = TextEditingController();
   TextEditingController _timeOfThirdDoseController = TextEditingController();
+  void _showSuccessDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Success'),
+          content: Text('Patient added successfully'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close dialog
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -516,6 +821,7 @@ class _AddPatientDialogState extends State<AddPatientDialog> {
                 timeThirdDose,
               );
               Navigator.of(context).pop(); // Confirm adding new patient
+              _showSuccessDialog(); // Show success dialog
             }
           },
           child: Text('Add'),
@@ -524,12 +830,4 @@ class _AddPatientDialogState extends State<AddPatientDialog> {
     );
   }
 }
-
-
-
-
-
-
-
-
 
